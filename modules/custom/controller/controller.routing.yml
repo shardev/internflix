@@ -1,0 +1,7 @@
+controller.movies_list:
+  path: '/controller/movies'
+  defaults:
+    _controller: '\Drupal\controller\Controller\MovieController::getAllMovies'
+    _title: 'All movies in our db'
+  requirements:
+    _permission: 'access content'
