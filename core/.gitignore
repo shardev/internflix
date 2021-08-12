@@ -19,3 +19,8 @@ nightwatch.settings.json
 
 # Ignore dotenv
 .env
+
+# Ignore sites dir
+sites/*/private
+sites/*/files/*
+!sites/*/files/config
