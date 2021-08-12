@@ -1,5 +1,5 @@
 controller.movies_list:
-  path: '/controller/test'
+  path: '/controller'
   defaults:
     _controller: '\Drupal\controller\Controller\MovieController::testMethod'
     _title: 'Controller test method'
