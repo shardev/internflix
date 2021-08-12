@@ -5,11 +5,11 @@ namespace Drupal\controller\Controller;
 class MovieController
 {
 
-  public function testMethod()
+  public function getAllMovies()
   {
 
     return array(
-      '#theme' => 'test',
+      '#theme' => 'movies_list',
       '#var' => 'Variable value test'
     );
   }
