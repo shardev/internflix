@@ -1,7 +1,7 @@
 controller.movies_list:
-  path: '/controller/movies'
+  path: '/controller/test'
   defaults:
-    _controller: '\Drupal\controller\Controller\MovieController::getAllMovies'
-    _title: 'All movies in our db'
+    _controller: '\Drupal\controller\Controller\MovieController::testMethod'
+    _title: 'Controller test method'
   requirements:
     _permission: 'access content'

@@ -12,8 +12,8 @@ use Twig\Sandbox\SecurityNotAllowedFunctionError;
 use Twig\Source;
 use Twig\Template;
 
-/* modules/custom/controller/templates/movies-list.html.twig */
-class __TwigTemplate_b9a485c75d3ec8c011e8f5bdb9c7ebe5a1e136dd92dbbe3a48f00e09791dbb6f extends \Twig\Template
+/* modules/custom/controller/templates/test.html.twig */
+class __TwigTemplate_cfab2de7a9866cf1d55ff89911574be5c57e22f727882ea9d14998988af75c2b extends \Twig\Template
 {
     private $source;
     private $macros = [];
@@ -36,18 +36,17 @@ class __TwigTemplate_b9a485c75d3ec8c011e8f5bdb9c7ebe5a1e136dd92dbbe3a48f00e09791
     {
         $macros = $this->macros;
         // line 1
-        echo "<h4>Movies in our database</h4>
-<h5>Var2</h5>
-";
-        // line 3
-        echo $this->extensions['Drupal\Core\Template\TwigExtension']->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed(($context["var2"] ?? null), 3, $this->source), "html", null, true);
-        echo "
+        echo "<h4>Test page for controllers</h4>
+<p>Value of variable var: ";
+        // line 2
+        echo $this->extensions['Drupal\Core\Template\TwigExtension']->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed(($context["var"] ?? null), 2, $this->source), "html", null, true);
+        echo "</p>
 ";
     }
 
     public function getTemplateName()
     {
-        return "modules/custom/controller/templates/movies-list.html.twig";
+        return "modules/custom/controller/templates/test.html.twig";
     }
 
     public function isTraitable()
@@ -57,21 +56,20 @@ class __TwigTemplate_b9a485c75d3ec8c011e8f5bdb9c7ebe5a1e136dd92dbbe3a48f00e09791
 
     public function getDebugInfo()
     {
-        return array (  43 => 3,  39 => 1,);
+        return array (  42 => 2,  39 => 1,);
     }
 
     public function getSourceContext()
     {
-        return new Source("<h4>Movies in our database</h4>
-<h5>Var2</h5>
-{{ var2 }}
-", "modules/custom/controller/templates/movies-list.html.twig", "C:\\xampp\\htdocs\\drupal_first_test\\modules\\custom\\controller\\templates\\movies-list.html.twig");
+        return new Source("<h4>Test page for controllers</h4>
+<p>Value of variable var: {{ var }}</p>
+", "modules/custom/controller/templates/test.html.twig", "C:\\xampp\\htdocs\\drupal_first_test\\modules\\custom\\controller\\templates\\test.html.twig");
     }
     
     public function checkSecurity()
     {
         static $tags = array();
-        static $filters = array("escape" => 3);
+        static $filters = array("escape" => 2);
         static $functions = array();
 
         try {
