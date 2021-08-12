@@ -1,0 +1,10 @@
+<?php
+function controller_theme($existing, $type, $theme, $path)
+{
+
+  return array(
+    'movies_list' => array(
+      'variables' => array('var' => 'Default value')
+    )
+  );
+}

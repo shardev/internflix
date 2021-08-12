@@ -24,3 +24,6 @@ nightwatch.settings.json
 sites/*/private
 sites/*/files/*
 !sites/*/files/config
+
+# Ignore .idea
+.idea/vcs.xml
