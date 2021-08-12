@@ -7,10 +7,13 @@ class MovieController
 
   public function getAllMovies()
   {
+    $nids = \Drupal::entityQuery('node')->condition('type','movie')->execute();
+    $nodes =  \Drupal\node\Entity\Node::loadMultiple($nids);
 
     return array(
       '#theme' => 'movies_list',
-      '#var' => 'Variable value test'
+      '#movies' => $nodes
     );
+
   }
 }
