@@ -5,3 +5,10 @@ controller.movies_list:
     _title: 'All movies in our database.'
   requirements:
     _permission: 'access content'
+controller.start_reservation:
+  path: '/start-movie-reservation'
+  defaults:
+    _controller: '\Drupal\controller\Controller\MovieReservationController::startMovieReservation'
+    _title: 'Start movie reservation'
+  requirements:
+    _permission: 'access content'
