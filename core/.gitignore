@@ -27,3 +27,6 @@ sites/*/files/*
 
 # Ignore .idea
 .idea/vcs.xml
+
+# Ignore contrib modules
+modules/contrib/
