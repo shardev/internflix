@@ -7,13 +7,17 @@ class MovieReservationController
 
   public function startMovieReservation()
   {
-
-    $nids = \Drupal::entityQuery('node')->condition('type', 'genre')->execute();
-    $nodes = \Drupal\node\Entity\Node::loadMultiple($nids);
+    $terms =\Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree('genre');
+    foreach ($terms as $term) {
+      $genres[] = array(
+        'id' => $term->tid,
+        'name' => $term->name
+      );
+    }
 
     return array(
       '#theme' => 'start_movie_reservation',
-      '#genres' => $nodes
+      '#genres' => $genres
     );
   }
 }
