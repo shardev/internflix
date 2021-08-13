@@ -5,6 +5,10 @@
     Please select movie genre for which you would like to make a reservation:
   </label>
 
-  <select name="movie-genre" id="movie-genre"></select>
+  <select name="movie-genre" id="movie-genre">
+    {% for genre in genres %}
+      <option value="{{ genre.label }}">{{ genre.label }}</option>
+    {% endfor %}
+  </select>
   <button type="submit">Search</button>
 </form>

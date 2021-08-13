@@ -10,7 +10,7 @@ function controller_theme($existing, $type, $theme, $path)
     ),
     'start_movie_reservation' => array(
       'variables' => array(
-        'var' => ''
+        'genres' => array()
       )
     )
   );
