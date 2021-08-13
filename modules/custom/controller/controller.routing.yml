@@ -12,3 +12,10 @@ controller.start_reservation:
     _title: 'Start movie reservation'
   requirements:
     _permission: 'access content'
+controller.get_by_genre:
+  path: '/getMoviesByGenre'
+  defaults:
+    _controller: '\Drupal\controller\Controller\MovieReservationController::getMoviesByGenre'
+    _title: 'Start movie reservation'
+  requirements:
+    _permission: 'access content'

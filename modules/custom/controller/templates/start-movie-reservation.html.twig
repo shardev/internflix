@@ -1,6 +1,6 @@
 <h4>Welcome to our movie reservation page</h4>
 
-<form action="">
+<form action="#">
   <label for="movie-genre">
     Please select movie genre for which you would like to make a reservation:
   </label>
@@ -10,5 +10,79 @@
       <option value="{{ genre.id }}">{{ genre.name }}</option>
     {% endfor %}
   </select>
-  <button type="submit">Search</button>
+  <button type="button" onclick="getMoviesByGenre()">Search</button>
 </form>
+
+<div id="moviesByGenre">
+
+</div>
+
+<style>
+  .active {
+    background-color: #0a65aa;
+  }
+
+  .inactive {
+    background-color: white;
+  }
+
+</style>
+<script>
+  function getMoviesByGenre() {
+    var genre = document.getElementById('movie-genre').value;
+    console.log(genre);
+
+    // Ajax request to MovieReservationController
+    jQuery.ajax({
+      url: "/getMoviesByGenre",
+      type: "get",
+      data: {"genre": genre},
+      // Fetch data from ajax response
+      success: function (response) {
+        console.log(response)
+        populateHtml(response);
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(textStatus, errorThrown);
+      }
+    });
+  }
+
+  function populateHtml(data) {
+    let html = "";
+
+    jQuery.each(data, function (k, v) {
+
+      if(v.days_available == null){
+        v.days_available = 'Not available.'
+      }
+
+      html += `<br><div class="inactive" id="movie-${v.id}" onclick="toggleActive(this.id)" "> <h4>Title: ${v.title} </h4> <br> <img src="${v.image}"> <p>Description: ${v.description} </p> <p> Available days: ${v.days_available}</p></div><hr>`
+    })
+
+    jQuery('#moviesByGenre').html(html);
+  }
+
+  function toggleActive(id){
+    var clickedDiv = document.getElementById(id)
+
+    if(clickedDiv.className == "inactive"){
+
+      // Deactivate another active if exists -- BUG: first click 2 then 1 movie
+      var alreadyActive = document.getElementsByClassName("active");
+      console.log(alreadyActive[0])
+
+      if(typeof alreadyActive[0] !== "undefined" && alreadyActive[0].id != clickedDiv.id){
+        alreadyActive[0].className = "inactive"
+      }
+      clickedDiv.className = "active"
+
+      alreadyActive = []
+      // Append button
+
+    }else{
+      clickedDiv.className = "inactive"
+      // Hide button
+    }
+  }
+</script>
