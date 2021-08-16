@@ -6,11 +6,12 @@
   </label>
 
   <select name="movie-genre" id="movie-genre">
-    {% for genre in genres %}
-      <option value="{{ genre.id }}">{{ genre.name }}</option>
-    {% endfor %}
+      <option value="0">All movies</option>
+      {% for genre in genres %}
+        <option value="{{ genre.id }}">{{ genre.name }}</option>
+      {% endfor %}
   </select>
-  <button type="button" onclick="getMoviesByGenre()">Search</button>
+  <button id="searchButton" type="button">Search</button>
 </form>
 
 <div id="moviesByGenre">
@@ -29,7 +30,7 @@
 
 </style>
 <script>
-  function getMoviesByGenre() {
+  jQuery("#searchButton").click(function (){
     var genre = document.getElementById('movie-genre').value;
     console.log(genre);
 
@@ -44,7 +45,7 @@
         console.log(textStatus, errorThrown);
       }
     });
-  }
+  })
 
   function populateHtml(data) {
     let html = "";
@@ -58,13 +59,13 @@
       let days_available_built = ''
       for (let key in v.days_available){ days_available_built += v.days_available[key] + ' ' }
 
-      html += `<br><div class="inactive" id="movie-${v.id}" onclick="toggleActive(this.id)" "> <h4>Title: ${v.title} </h4> <br> <img src="${v.image}"> <p>Description: ${v.description} </p> <p> Available days:` + days_available_built + `</p></div><hr>`
+      html += `<br><div class="inactive" id="movie-${v.id}" onclick="toggleActive(this.id)" > <h4>Title: ${v.title} </h4> <br> <img src="${v.image}"> <p>Description: ${v.description} </p> <p> Available days:` + days_available_built + `</p></div><hr>`
     })
 
     jQuery('#moviesByGenre').html(html);
   }
 
-  function toggleActive(id) {
+  function toggleActive(id){
     var clickedDiv = document.getElementById(id)
 
     if (clickedDiv.className == "inactive") {

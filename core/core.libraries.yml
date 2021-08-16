@@ -79,6 +79,7 @@ drupal.ajax:
       theme: null
       theme_token: null
     ajaxTrustedUrl: {}
+  header: true
   dependencies:
     - core/jquery
     - core/drupal

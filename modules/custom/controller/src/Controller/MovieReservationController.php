@@ -26,30 +26,33 @@ class MovieReservationController
   function getMoviesByGenre()
   {
     $tid = $_GET['genre'];
-    if ($tid == NULL) {
-      return NULL;
+    if($tid == NULL){
+      return  NULL;
+    } else if ($tid == 0) {
+      $nids = \Drupal::entityQuery('node')->condition('type', 'movie')->execute();
+      $nodes = \Drupal\node\Entity\Node::loadMultiple($nids);
     } else {
       $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadByProperties(['field_movie_genre' => $tid,]);
+    }
 
-      foreach ($nodes as $node) {
-        $allowed_values = $node->getFieldDefinition('field_availabile_days')->getFieldStorageDefinition()->getSetting('allowed_values');
-        $day_values = $node->get('field_availabile_days')->getValue();
+    foreach ($nodes as $node) {
+      $allowed_values = $node->getFieldDefinition('field_availabile_days')->getFieldStorageDefinition()->getSetting('allowed_values');
+      $day_values = $node->get('field_availabile_days')->getValue();
 
-        $days_available = [];
-        foreach ($day_values as $singleDay) {
-          $days_available[$singleDay["value"]] = $allowed_values[$singleDay["value"]];
-        }
-
-        $json[] = array(
-          'id' => $node->id(),
-          'title' => $node->label(),
-          'description' => $node->field_description->value,
-          'image' => file_create_url($node->field_movie_cover_image->entity->getFileUri()),
-          'days_available' => $days_available
-        );
+      $days_available = [];
+      foreach ($day_values as $singleDay) {
+        $days_available[$singleDay["value"]] = $allowed_values[$singleDay["value"]];
       }
 
-      return new JsonResponse($json);
+      $json[] = array(
+        'id' => $node->id(),
+        'title' => $node->label(),
+        'description' => $node->field_description->value,
+        'image' => file_create_url($node->field_movie_cover_image->entity->getFileUri()),
+        'days_available' => $days_available
+      );
     }
+
+    return new JsonResponse($json);
   }
 }

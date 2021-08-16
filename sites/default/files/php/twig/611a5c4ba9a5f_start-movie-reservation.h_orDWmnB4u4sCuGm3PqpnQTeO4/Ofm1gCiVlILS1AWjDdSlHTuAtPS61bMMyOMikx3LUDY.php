@@ -44,25 +44,26 @@ class __TwigTemplate_b4c92093f1c9a5d41ba59eac10fc30923d6b0e151468f3f34baed549f3a
   </label>
 
   <select name=\"movie-genre\" id=\"movie-genre\">
-    ";
-        // line 9
+      <option value=\"0\">All movies</option>
+      ";
+        // line 10
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(($context["genres"] ?? null));
         foreach ($context['_seq'] as $context["_key"] => $context["genre"]) {
-            // line 10
-            echo "      <option value=\"";
-            echo $this->extensions['Drupal\Core\Template\TwigExtension']->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed(twig_get_attribute($this->env, $this->source, $context["genre"], "id", [], "any", false, false, true, 10), 10, $this->source), "html", null, true);
+            // line 11
+            echo "        <option value=\"";
+            echo $this->extensions['Drupal\Core\Template\TwigExtension']->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed(twig_get_attribute($this->env, $this->source, $context["genre"], "id", [], "any", false, false, true, 11), 11, $this->source), "html", null, true);
             echo "\">";
-            echo $this->extensions['Drupal\Core\Template\TwigExtension']->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed(twig_get_attribute($this->env, $this->source, $context["genre"], "name", [], "any", false, false, true, 10), 10, $this->source), "html", null, true);
+            echo $this->extensions['Drupal\Core\Template\TwigExtension']->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed(twig_get_attribute($this->env, $this->source, $context["genre"], "name", [], "any", false, false, true, 11), 11, $this->source), "html", null, true);
             echo "</option>
-    ";
+      ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['genre'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 12
+        // line 13
         echo "  </select>
-  <button type=\"button\" onclick=\"getMoviesByGenre()\">Search</button>
+  <button id=\"searchButton\" type=\"button\">Search</button>
 </form>
 
 <div id=\"moviesByGenre\">
@@ -81,7 +82,7 @@ class __TwigTemplate_b4c92093f1c9a5d41ba59eac10fc30923d6b0e151468f3f34baed549f3a
 
 </style>
 <script>
-  function getMoviesByGenre() {
+  jQuery(\"#searchButton\").click(function (){
     var genre = document.getElementById('movie-genre').value;
     console.log(genre);
 
@@ -96,7 +97,7 @@ class __TwigTemplate_b4c92093f1c9a5d41ba59eac10fc30923d6b0e151468f3f34baed549f3a
         console.log(textStatus, errorThrown);
       }
     });
-  }
+  })
 
   function populateHtml(data) {
     let html = \"\";
@@ -110,13 +111,13 @@ class __TwigTemplate_b4c92093f1c9a5d41ba59eac10fc30923d6b0e151468f3f34baed549f3a
       let days_available_built = ''
       for (let key in v.days_available){ days_available_built += v.days_available[key] + ' ' }
 
-      html += `<br><div class=\"inactive\" id=\"movie-\${v.id}\" onclick=\"toggleActive(this.id)\" \"> <h4>Title: \${v.title} </h4> <br> <img src=\"\${v.image}\"> <p>Description: \${v.description} </p> <p> Available days:` + days_available_built + `</p></div><hr>`
+      html += `<br><div class=\"inactive\" id=\"movie-\${v.id}\" onclick=\"toggleActive(this.id)\" > <h4>Title: \${v.title} </h4> <br> <img src=\"\${v.image}\"> <p>Description: \${v.description} </p> <p> Available days:` + days_available_built + `</p></div><hr>`
     })
 
     jQuery('#moviesByGenre').html(html);
   }
 
-  function toggleActive(id) {
+  function toggleActive(id){
     var clickedDiv = document.getElementById(id)
 
     if (clickedDiv.className == \"inactive\") {
@@ -157,7 +158,7 @@ class __TwigTemplate_b4c92093f1c9a5d41ba59eac10fc30923d6b0e151468f3f34baed549f3a
 
     public function getDebugInfo()
     {
-        return array (  64 => 12,  53 => 10,  49 => 9,  39 => 1,);
+        return array (  65 => 13,  54 => 11,  50 => 10,  39 => 1,);
     }
 
     public function getSourceContext()
@@ -170,11 +171,12 @@ class __TwigTemplate_b4c92093f1c9a5d41ba59eac10fc30923d6b0e151468f3f34baed549f3a
   </label>
 
   <select name=\"movie-genre\" id=\"movie-genre\">
-    {% for genre in genres %}
-      <option value=\"{{ genre.id }}\">{{ genre.name }}</option>
-    {% endfor %}
+      <option value=\"0\">All movies</option>
+      {% for genre in genres %}
+        <option value=\"{{ genre.id }}\">{{ genre.name }}</option>
+      {% endfor %}
   </select>
-  <button type=\"button\" onclick=\"getMoviesByGenre()\">Search</button>
+  <button id=\"searchButton\" type=\"button\">Search</button>
 </form>
 
 <div id=\"moviesByGenre\">
@@ -193,7 +195,7 @@ class __TwigTemplate_b4c92093f1c9a5d41ba59eac10fc30923d6b0e151468f3f34baed549f3a
 
 </style>
 <script>
-  function getMoviesByGenre() {
+  jQuery(\"#searchButton\").click(function (){
     var genre = document.getElementById('movie-genre').value;
     console.log(genre);
 
@@ -208,7 +210,7 @@ class __TwigTemplate_b4c92093f1c9a5d41ba59eac10fc30923d6b0e151468f3f34baed549f3a
         console.log(textStatus, errorThrown);
       }
     });
-  }
+  })
 
   function populateHtml(data) {
     let html = \"\";
@@ -222,13 +224,13 @@ class __TwigTemplate_b4c92093f1c9a5d41ba59eac10fc30923d6b0e151468f3f34baed549f3a
       let days_available_built = ''
       for (let key in v.days_available){ days_available_built += v.days_available[key] + ' ' }
 
-      html += `<br><div class=\"inactive\" id=\"movie-\${v.id}\" onclick=\"toggleActive(this.id)\" \"> <h4>Title: \${v.title} </h4> <br> <img src=\"\${v.image}\"> <p>Description: \${v.description} </p> <p> Available days:` + days_available_built + `</p></div><hr>`
+      html += `<br><div class=\"inactive\" id=\"movie-\${v.id}\" onclick=\"toggleActive(this.id)\" > <h4>Title: \${v.title} </h4> <br> <img src=\"\${v.image}\"> <p>Description: \${v.description} </p> <p> Available days:` + days_available_built + `</p></div><hr>`
     })
 
     jQuery('#moviesByGenre').html(html);
   }
 
-  function toggleActive(id) {
+  function toggleActive(id){
     var clickedDiv = document.getElementById(id)
 
     if (clickedDiv.className == \"inactive\") {
@@ -259,8 +261,8 @@ class __TwigTemplate_b4c92093f1c9a5d41ba59eac10fc30923d6b0e151468f3f34baed549f3a
     
     public function checkSecurity()
     {
-        static $tags = array("for" => 9);
-        static $filters = array("escape" => 10);
+        static $tags = array("for" => 10);
+        static $filters = array("escape" => 11);
         static $functions = array();
 
         try {
