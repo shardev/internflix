@@ -17,9 +17,10 @@
 
 </div>
 
+
 <style>
   .active {
-    background-color: #0a65aa;
+    background-color: #285c91;
   }
 
   .inactive {
@@ -32,14 +33,11 @@
     var genre = document.getElementById('movie-genre').value;
     console.log(genre);
 
-    // Ajax request to MovieReservationController
     jQuery.ajax({
       url: "/getMoviesByGenre",
       type: "get",
       data: {"genre": genre},
-      // Fetch data from ajax response
       success: function (response) {
-        console.log(response)
         populateHtml(response);
       },
       error: function (jqXHR, textStatus, errorThrown) {
@@ -53,36 +51,42 @@
 
     jQuery.each(data, function (k, v) {
 
-      if(v.days_available == null){
+      if (v.days_available == null) {
         v.days_available = 'Not available.'
       }
 
-      html += `<br><div class="inactive" id="movie-${v.id}" onclick="toggleActive(this.id)" "> <h4>Title: ${v.title} </h4> <br> <img src="${v.image}"> <p>Description: ${v.description} </p> <p> Available days: ${v.days_available}</p></div><hr>`
+      let days_available_built = ''
+      for (let key in v.days_available){ days_available_built += v.days_available[key] + ' ' }
+
+      html += `<br><div class="inactive" id="movie-${v.id}" onclick="toggleActive(this.id)" "> <h4>Title: ${v.title} </h4> <br> <img src="${v.image}"> <p>Description: ${v.description} </p> <p> Available days:` + days_available_built + `</p></div><hr>`
     })
 
     jQuery('#moviesByGenre').html(html);
   }
 
-  function toggleActive(id){
+  function toggleActive(id) {
     var clickedDiv = document.getElementById(id)
 
-    if(clickedDiv.className == "inactive"){
+    if (clickedDiv.className == "inactive") {
 
-      // Deactivate another active if exists -- BUG: first click 2 then 1 movie
       var alreadyActive = document.getElementsByClassName("active");
       console.log(alreadyActive[0])
 
-      if(typeof alreadyActive[0] !== "undefined" && alreadyActive[0].id != clickedDiv.id){
-        alreadyActive[0].className = "inactive"
+      // Deactivate another active divs if exist
+      for (let i = 0; i < alreadyActive.length; i++) {
+        if (typeof alreadyActive[i] !== "undefined" && alreadyActive[i].id != clickedDiv.id) {
+          alreadyActive[i].className = "inactive"
+          jQuery('#reservationButton').remove()
+        }
       }
+
       clickedDiv.className = "active"
-
       alreadyActive = []
-      // Append button
+      jQuery('#'+id).after(`<div id="reservationButton"><button>Reserve movie</button></div>`)
 
-    }else{
+    } else {
       clickedDiv.className = "inactive"
-      // Hide button
+      jQuery('#reservationButton').remove()
     }
   }
 </script>

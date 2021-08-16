@@ -32,12 +32,20 @@ class MovieReservationController
       $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadByProperties(['field_movie_genre' => $tid,]);
 
       foreach ($nodes as $node) {
+        $allowed_values = $node->getFieldDefinition('field_availabile_days')->getFieldStorageDefinition()->getSetting('allowed_values');
+        $day_values = $node->get('field_availabile_days')->getValue();
+
+        $days_available = [];
+        foreach ($day_values as $singleDay) {
+          $days_available[$singleDay["value"]] = $allowed_values[$singleDay["value"]];
+        }
+
         $json[] = array(
           'id' => $node->id(),
           'title' => $node->label(),
           'description' => $node->field_description->value,
           'image' => file_create_url($node->field_movie_cover_image->entity->getFileUri()),
-          'days_available' => $node->field_availabile_days->value // fix this to return whole list, and not integer but words
+          'days_available' => $days_available
         );
       }
 
