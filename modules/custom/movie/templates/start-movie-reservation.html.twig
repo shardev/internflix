@@ -15,7 +15,12 @@
 </form>
 
 <div id="moviesByGenre">
-
+  {% for movie in movies %}
+    <h5>{{ movie.label }}</h5>
+    <p> Description: {{ movie.field_description.value|striptags }} </p>
+    <img src="{{ file_url(movie.field_movie_cover_image.entity.fileuri) }}" alt="">
+    <hr>
+  {% endfor %}
 </div>
 
 
@@ -41,7 +46,10 @@
       data: {"genre": genre},
       success: function (response) {
         console.log(response)
-        populateHtml(response);
+        // set new html RESPONSE WAS THEME
+        // TODO
+        jQuery("html").html(response)
+        //populateHtml(response);
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log(textStatus, errorThrown);

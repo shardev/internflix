@@ -25,6 +25,9 @@ class MovieReservationController
       );
     }
 
+    //if(isset($_GET['genre'])){
+      //return only nodes
+    //}
     return array(
       '#theme' => 'start_movie_reservation',
       '#genres' => $genres,
@@ -32,6 +35,7 @@ class MovieReservationController
     );
   }
 
+  /*
   function getMoviesByGenre()
   {
 
@@ -60,4 +64,5 @@ class MovieReservationController
 
     return new JsonResponse($json);
   }
+  */
 }
