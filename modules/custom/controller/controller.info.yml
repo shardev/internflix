@@ -1,4 +1,0 @@
-name: Movie Cinema
-description: Controller that is responsible for managing movie entities. Responses are in twig format.
-type: module
-core_version_requirement: 9.x

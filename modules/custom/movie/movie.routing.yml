@@ -1,0 +1,14 @@
+movie.start_reservation:
+  path: '/start-movie-reservation'
+  defaults:
+    _controller: '\Drupal\movie\Controller\MovieReservationController::startMovieReservation'
+    _title: 'Start movie reservation'
+  requirements:
+    _permission: 'access content'
+movie.get_by_genre:
+  path: '/get-movies-by-genre'
+  defaults:
+    _controller: '\Drupal\movie\Controller\MovieReservationController::getMoviesByGenre'
+    _title: 'Start movie reservation'
+  requirements:
+    _permission: 'access content'
