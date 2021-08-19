@@ -2,7 +2,7 @@ movie_custom_library:
   version: 1.0
   css:
     theme:
-      css/local.css: {}
+      css/movieitem.css: {}
   js:
     js/reservation.js: {}
   dependencies:
