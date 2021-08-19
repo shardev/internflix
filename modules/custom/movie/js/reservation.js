@@ -1,4 +1,6 @@
 jQuery(function () {
+  let availableDaysForMovie = []
+
   jQuery("#searchButton").click(function () {
     var genre = document.getElementById('movie-genre').value;
 
@@ -7,9 +9,9 @@ jQuery(function () {
       type: "get",
       data: {"genre": genre},
       success: function (response) {
-        document.open();
-        document.write(response);
-        document.close();
+        document.open()
+        document.write(response)
+        document.close()
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log(textStatus, errorThrown);
@@ -32,7 +34,20 @@ jQuery(function () {
 
       clickedDiv.removeClass("inactive")
       clickedDiv.addClass("active")
+
       jQuery(('#' + clickedDiv.attr('id'))).after(`<div id="reservationButton"><button>Reserve movie</button></div>`)
+      jQuery("#reservationButton").click({divID : clickedDiv.attr('id')}, function (event) {
+        // Handle popup
+        let extractedId = event.data.divID.slice(10, 11)
+        let availableDaysForSelectedMovie = jQuery('#available-days-' + extractedId)
+        let dayDivs = availableDaysForSelectedMovie.children();
+
+        availableDaysForMovie[extractedId] = [];
+        [...dayDivs].forEach((day,i) => {
+          availableDaysForMovie[extractedId].push(day.dataset.day)
+        })
+      })
+
 
     } else {
       clickedDiv.removeClass("active")
