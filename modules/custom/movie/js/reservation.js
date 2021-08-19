@@ -1,6 +1,6 @@
 jQuery(function () {
   jQuery("#searchButton").click(function () {
-    var genre = document.getElementById('movie-genre').value;
+    let genre = jQuery('#movie-genre').val();
 
     jQuery.ajax({
       url: "/start-movie-reservation",
@@ -20,7 +20,7 @@ jQuery(function () {
   jQuery('[id^="movieitem-"]').click(function (event) {
     let clickedDiv = jQuery(this).closest('h5').prevObject
     if (clickedDiv.attr("class") == "inactive") {
-      let alreadyActive = document.getElementsByClassName("active");
+      let alreadyActive = jQuery(".active");
 
       // Deactivate another active divs if exist
       [...alreadyActive].forEach((activeDiv, i) => {
