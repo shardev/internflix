@@ -4,9 +4,10 @@ global:
     theme:
       css/style.css: {}
       css/responsive.css: {}
-      #css/local.css: {}
+      css/local.css: {}
   js:
     js/jquery.cycle.lite.js: {}
     js/superfish.js: {}
+    js/reservation.js: {}
   dependencies:
     - core/jquery

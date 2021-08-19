@@ -6,3 +6,11 @@
 /* By restricting your css changes to local.css, your    */
 /* changes will not be overwritten when upgrading to a   */
 /* new version of this theme.                            */
+
+.active {
+  background-color: #285c91;
+}
+
+.inactive {
+  background-color: white;
+}

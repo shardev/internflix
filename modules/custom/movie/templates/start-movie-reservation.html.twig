@@ -13,91 +13,29 @@
   </select>
   <button id="searchButton" type="button">Search</button>
 </form>
+<hr>
 
 <div id="moviesByGenre">
   {% for movie in movies %}
-    <h5>{{ movie.label }}</h5>
-    <p> Description: {{ movie.field_description.value|striptags }} </p>
-    <img src="{{ file_url(movie.field_movie_cover_image.entity.fileuri) }}" alt="">
-    <hr>
+    <br>
+    <div class="inactive" id="movieitem-{{ movie.id }}">
+      <h5>{{ movie.label }}</h5>
+      <p> Description: {{ movie.field_description.value|striptags }} </p>
+      <img src="{{ file_url(movie.field_movie_cover_image.entity.fileuri) }}" alt="">
+      <div>
+        Available days:
+        {% set allowed_values = movie.field_availabile_days.getSetting('allowed_values') %}
+        {% set list_values = movie.field_availabile_days.getValue() %}
+        {% if list_values is empty %}
+          <p>Movie is not available.</p>
+        {% endif %}
+        {% for list_value in list_values %}
+          <div>
+            {{ allowed_values[list_value['value']] }}
+          </div>
+        {% endfor %}
+      </div>
+      <hr>
+    </div>
   {% endfor %}
 </div>
-
-
-<style>
-  .active {
-    background-color: #285c91;
-  }
-
-  .inactive {
-    background-color: white;
-  }
-
-</style>
-<script>
-  //jQuery(document).ready(function)
-  jQuery("#searchButton").click(function (){
-    var genre = document.getElementById('movie-genre').value;
-    console.log(genre);
-
-    jQuery.ajax({
-      url: "/start-movie-reservation",
-      type: "get",
-      data: {"genre": genre},
-      success: function (response) {
-        console.log(response)
-        // set new html RESPONSE WAS THEME
-        // TODO
-        jQuery("html").html(response)
-        //populateHtml(response);
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-        console.log(textStatus, errorThrown);
-      }
-    });
-  })
-
-  function populateHtml(data) {
-    let html = "";
-
-    jQuery.each(data, function (k, v) {
-
-      if (v.days_available == null) {
-        v.days_available = 'Not available.'
-      }
-
-      let days_available_built = ''
-      for (let key in v.days_available){ days_available_built += v.days_available[key] + ' ' }
-
-      html += `<br><div class="inactive" id="movie-${v.id}" onclick="toggleActive(this.id)" > <h4>Title: ${v.title} </h4> <br> <img src="${v.image}"> <p>Description: ${v.description} </p> <p> Available days:` + days_available_built + `</p></div><hr>`
-    })
-
-    jQuery('#moviesByGenre').html(html);
-  }
-
-  function toggleActive(id){
-    var clickedDiv = document.getElementById(id)
-
-    if (clickedDiv.className == "inactive") {
-
-      var alreadyActive = document.getElementsByClassName("active");
-      console.log(alreadyActive[0])
-
-      // Deactivate another active divs if exist
-      for (let i = 0; i < alreadyActive.length; i++) {
-        if (typeof alreadyActive[i] !== "undefined" && alreadyActive[i].id != clickedDiv.id) {
-          alreadyActive[i].className = "inactive"
-          jQuery('#reservationButton').remove()
-        }
-      }
-
-      clickedDiv.className = "active"
-      alreadyActive = []
-      jQuery('#'+id).after(`<div id="reservationButton"><button>Reserve movie</button></div>`)
-
-    } else {
-      clickedDiv.className = "inactive"
-      jQuery('#reservationButton').remove()
-    }
-  }
-</script>
