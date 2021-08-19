@@ -23,12 +23,12 @@ jQuery(function () {
       let alreadyActive = document.getElementsByClassName("active");
 
       // Deactivate another active divs if exist
-      for (let i = 0; i < alreadyActive.length; i++) {
-        if (typeof alreadyActive[i] !== "undefined" && alreadyActive[i].id != clickedDiv.id) {
-          alreadyActive[i].className = "inactive"
+      [...alreadyActive].forEach((activeDiv, i) => {
+        if (typeof activeDiv !== "undefined" && activeDiv.id != clickedDiv.attr('id')) {
+          activeDiv.className = "inactive"
           jQuery('#reservationButton').remove()
         }
-      }
+      })
 
       clickedDiv.removeClass("inactive")
       clickedDiv.addClass("active")

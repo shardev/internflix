@@ -1,0 +1,9 @@
+movie_custom_library:
+  version: 1.0
+  css:
+    theme:
+      css/local.css: {}
+  js:
+    js/reservation.js: {}
+  dependencies:
+    - core/jquery

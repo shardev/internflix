@@ -17,9 +17,10 @@ class MovieReservationController
       );
     }
 
+    $genreProvided = \Drupal::request()->query->get('genre');
     $query = \Drupal::entityQuery('node')->condition('type', 'movie');
-    if (!empty($_GET['genre'])) {
-      $query->condition('field_movie_genre', $_GET['genre']);
+    if (!empty($genreProvided)) {
+      $query->condition('field_movie_genre', $genreProvided);
     }
     $node_ids = $query->execute();
     $nodes = \Drupal\node\Entity\Node::loadMultiple($node_ids);
