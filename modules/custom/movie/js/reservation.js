@@ -47,7 +47,7 @@ jQuery(function () {
   })
 
   function availableDaysPopupHandler(event) {
-    let extractedId = event.data.divID.slice(10, 11) // pattern: movieitem-id
+    const extractedId = event.data.divID.slice(10, 11) // pattern: movieitem-id
     availableDaysForMovies[extractedId] = [];
     [...jQuery('#available-days-' + extractedId).children()].forEach((day, i) => {
       availableDaysForMovies[extractedId].push(day.dataset.day)
