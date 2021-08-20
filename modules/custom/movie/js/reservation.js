@@ -59,7 +59,7 @@ jQuery(function () {
       jQuery('<div id="dialog"><div/>').appendTo('#reservationButton')
 
       let htmlForButton = ''
-      if(availableDaysForMovies[extractedId].length == 0){
+      if(!availableDaysForMovies[extractedId].length){
         htmlForButton = 'Currently there are not available days for this movie.'
       }else{
         availableDaysForMovies[extractedId].forEach((day, i) => {
