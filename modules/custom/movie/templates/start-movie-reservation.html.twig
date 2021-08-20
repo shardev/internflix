@@ -30,11 +30,13 @@
         {% if list_values is empty %}
           <p>Movie is not available.</p>
         {% endif %}
-        {% for list_value in list_values %}
-          <div>
-            {{ allowed_values[list_value['value']] }}
-          </div>
-        {% endfor %}
+        <div id="available-days-{{ movie.id }}">
+          {% for list_value in list_values %}
+            <div data-day="{{ allowed_values[list_value['value']] }}">
+              {{ allowed_values[list_value['value']] }}
+            </div>
+          {% endfor %}
+        </div>
       </div>
       <hr>
     </div>

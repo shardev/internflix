@@ -109,24 +109,31 @@ class __TwigTemplate_b55cfba5bc3651bffb63ebcff2ac73504fe9f6a8459c26be55a713cee07
         ";
             }
             // line 33
-            echo "        ";
+            echo "        <div id=\"available-days-";
+            echo $this->extensions['Drupal\Core\Template\TwigExtension']->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed(twig_get_attribute($this->env, $this->source, $context["movie"], "id", [], "any", false, false, true, 33), 33, $this->source), "html", null, true);
+            echo "\">
+          ";
+            // line 34
             $context['_parent'] = $context;
             $context['_seq'] = twig_ensure_traversable(($context["list_values"] ?? null));
             foreach ($context['_seq'] as $context["_key"] => $context["list_value"]) {
-                // line 34
-                echo "          <div>
-            ";
                 // line 35
+                echo "            <div data-day=\"";
                 echo $this->extensions['Drupal\Core\Template\TwigExtension']->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed((($__internal_f607aeef2c31a95a7bf963452dff024ffaeb6aafbe4603f9ca3bec57be8633f4 = ($context["allowed_values"] ?? null)) && is_array($__internal_f607aeef2c31a95a7bf963452dff024ffaeb6aafbe4603f9ca3bec57be8633f4) || $__internal_f607aeef2c31a95a7bf963452dff024ffaeb6aafbe4603f9ca3bec57be8633f4 instanceof ArrayAccess ? ($__internal_f607aeef2c31a95a7bf963452dff024ffaeb6aafbe4603f9ca3bec57be8633f4[(($__internal_62824350bc4502ee19dbc2e99fc6bdd3bd90e7d8dd6e72f42c35efd048542144 = $context["list_value"]) && is_array($__internal_62824350bc4502ee19dbc2e99fc6bdd3bd90e7d8dd6e72f42c35efd048542144) || $__internal_62824350bc4502ee19dbc2e99fc6bdd3bd90e7d8dd6e72f42c35efd048542144 instanceof ArrayAccess ? ($__internal_62824350bc4502ee19dbc2e99fc6bdd3bd90e7d8dd6e72f42c35efd048542144["value"] ?? null) : null)] ?? null) : null), 35, $this->source), "html", null, true);
+                echo "\">
+              ";
+                // line 36
+                echo $this->extensions['Drupal\Core\Template\TwigExtension']->escapeFilter($this->env, $this->sandbox->ensureToStringAllowed((($__internal_1cfccaec8dd2e8578ccb026fbe7f2e7e29ac2ed5deb976639c5fc99a6ea8583b = ($context["allowed_values"] ?? null)) && is_array($__internal_1cfccaec8dd2e8578ccb026fbe7f2e7e29ac2ed5deb976639c5fc99a6ea8583b) || $__internal_1cfccaec8dd2e8578ccb026fbe7f2e7e29ac2ed5deb976639c5fc99a6ea8583b instanceof ArrayAccess ? ($__internal_1cfccaec8dd2e8578ccb026fbe7f2e7e29ac2ed5deb976639c5fc99a6ea8583b[(($__internal_68aa442c1d43d3410ea8f958ba9090f3eaa9a76f8de8fc9be4d6c7389ba28002 = $context["list_value"]) && is_array($__internal_68aa442c1d43d3410ea8f958ba9090f3eaa9a76f8de8fc9be4d6c7389ba28002) || $__internal_68aa442c1d43d3410ea8f958ba9090f3eaa9a76f8de8fc9be4d6c7389ba28002 instanceof ArrayAccess ? ($__internal_68aa442c1d43d3410ea8f958ba9090f3eaa9a76f8de8fc9be4d6c7389ba28002["value"] ?? null) : null)] ?? null) : null), 36, $this->source), "html", null, true);
                 echo "
-          </div>
-        ";
+            </div>
+          ";
             }
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['list_value'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 38
-            echo "      </div>
+            // line 39
+            echo "        </div>
+      </div>
       <hr>
     </div>
   ";
@@ -134,7 +141,7 @@ class __TwigTemplate_b55cfba5bc3651bffb63ebcff2ac73504fe9f6a8459c26be55a713cee07
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['movie'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 42
+        // line 44
         echo "</div>
 ";
     }
@@ -151,7 +158,7 @@ class __TwigTemplate_b55cfba5bc3651bffb63ebcff2ac73504fe9f6a8459c26be55a713cee07
 
     public function getDebugInfo()
     {
-        return array (  138 => 42,  129 => 38,  120 => 35,  117 => 34,  112 => 33,  108 => 31,  105 => 30,  102 => 29,  100 => 28,  94 => 25,  90 => 24,  86 => 23,  82 => 22,  79 => 21,  75 => 20,  67 => 14,  56 => 12,  52 => 11,  39 => 1,);
+        return array (  145 => 44,  135 => 39,  126 => 36,  121 => 35,  117 => 34,  112 => 33,  108 => 31,  105 => 30,  102 => 29,  100 => 28,  94 => 25,  90 => 24,  86 => 23,  82 => 22,  79 => 21,  75 => 20,  67 => 14,  56 => 12,  52 => 11,  39 => 1,);
     }
 
     public function getSourceContext()
@@ -188,11 +195,13 @@ class __TwigTemplate_b55cfba5bc3651bffb63ebcff2ac73504fe9f6a8459c26be55a713cee07
         {% if list_values is empty %}
           <p>Movie is not available.</p>
         {% endif %}
-        {% for list_value in list_values %}
-          <div>
-            {{ allowed_values[list_value['value']] }}
-          </div>
-        {% endfor %}
+        <div id=\"available-days-{{ movie.id }}\">
+          {% for list_value in list_values %}
+            <div data-day=\"{{ allowed_values[list_value['value']] }}\">
+              {{ allowed_values[list_value['value']] }}
+            </div>
+          {% endfor %}
+        </div>
       </div>
       <hr>
     </div>
