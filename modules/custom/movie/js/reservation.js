@@ -4,7 +4,7 @@ jQuery(function () {
   let confirmationPopupOpened = false
 
   jQuery("#searchButton").click(function () {
-    let genre = document.getElementById('movie-genre').value;
+    const genre = document.getElementById('movie-genre').value;
 
     jQuery.ajax({
       url: "/start-movie-reservation",
