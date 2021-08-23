@@ -7,6 +7,29 @@ function movie_theme($existing, $type, $theme, $path)
         'genres' => array(),
         'movies' => array()
       )
+    ),
+    'exporter_page' => array(
+      'variables' => array(
+        'var' => ''
+      )
     )
   );
 }
+
+//function movie_menu() {
+//  $items = array();
+//  $items['admin/movie-exporter'] = array(
+//    'title' => 'Export movies to external file',
+//    'page callback' => 'exporter_page_callback',
+//    'access arguments' => array('administer my module'),
+//    'type' => MENU_NORMAL_ITEM,
+//  );
+//
+//  return $items;
+//}
+//
+//function exporter_page_callback(){
+//  return '<h1>String test!</h1>';
+//  //return theme('exporter_page');
+//}
+

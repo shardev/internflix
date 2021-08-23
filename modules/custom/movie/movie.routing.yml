@@ -5,3 +5,16 @@ movie.start_reservation:
     _title: 'Start movie reservation'
   requirements:
     _permission: 'access content'
+movie.exporter_page:
+  path: '/movie-exporter'
+  defaults:
+    _controller: '\Drupal\movie\Controller\MovieReservationController::exporterPage'
+    _title: 'Exporter page'
+  requirements:
+    _permission: 'access content'
+movie.exporter_processing:
+  path: '/movie-exporter-processing'
+  defaults:
+    _controller: '\Drupal\movie\Controller\MovieReservationController::exporterProcessing'
+  requirements:
+    _permission: 'access content'
