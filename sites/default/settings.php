@@ -815,4 +815,4 @@ $databases['default']['default'] = array (
 $settings['config_sync_directory'] = 'sites/default/files/config_MFWp-gILPSxb7kIDWQqtfisk_XqeB5zUChEbDOHUBgkWLPDCyf-ervof7vgCDwU8dIhkGGkbxw/sync';
 $settings['trusted_host_patterns'] = array('^localhost$', '^www\.internflix\.com$');
 $config['system.logging']['error_level']='verbose';
-
+$settings['config_exclude_modules'] = ['controller'];

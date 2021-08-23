@@ -7,6 +7,11 @@ function movie_theme($existing, $type, $theme, $path)
         'genres' => array(),
         'movies' => array()
       )
+    ),
+    'create_table_reservations' => array(
+      'variables' => array(
+        'msg' => ''
+      )
     )
   );
 }
