@@ -1,0 +1,10 @@
+<h1>Loaded new books:</h1>
+<br>
+{% for book in books %}
+  <div class="book-item">
+    <h3>Book title: {{ book.label }}</h3>
+    <p>Price: {{ book.field_bookprice.value }}$</p>
+    <p>ISBN: {{ book.field_isbn.value }}</p>
+  </div>
+  <hr>
+{% endfor %}

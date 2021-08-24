@@ -2,8 +2,13 @@
 
 namespace Drupal\movie\Controller;
 
+use Drupal\book\Plugin\migrate\source\Book;
 use Drupal\Core\Database\Database;
+use Drupal\node\Entity\Node;
+use GuzzleHttp\Exception\RequestException;
 use Laminas\Diactoros\Response\JsonResponse;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Exception\UnexpectedValueException;
 
 class MovieReservationController
 {
@@ -33,7 +38,8 @@ class MovieReservationController
     );
   }
 
-  public function createReservationsTable(){
+  public function createReservationsTable()
+  {
     $msg = 'Table [reservations] already exists.';
 
     if (!Database::getConnection()->schema()->tableExists('reservations')) {
@@ -87,6 +93,48 @@ class MovieReservationController
     return array(
       '#theme' => 'create_table_reservations',
       '#msg' => $msg
+    );
+  }
+
+  function callExternalURL()
+  {
+    $url = 'https://www.chilkatsoft.com/xml-samples/bookstore.xml';
+    try {
+      $response = \Drupal::httpClient()->get($url);
+      $xmlFromResponse = (string) $response->getBody();
+
+      try {
+        $encoder = new XmlEncoder('root');
+        $booksXML = $encoder->decode($xmlFromResponse, 'xml');
+        return $booksXML;
+      } catch (UnexpectedValueException $e) {
+        return "Error while decoding XML";
+        //throw new InvalidXmlInResponseException($e->getMessage());
+      }
+    } catch (RequestException $e) {
+      return "Error while requesting external URL";
+    }
+  }
+
+  function processXMLBooks(){
+    $booksXML = $this->callExternalURL();
+    $addedBooks = array();
+    foreach ($booksXML["book"] as $book){
+      foreach($book["comments"]["userComment"] as $singleComment) {
+        $newBook = Node::create(['type' => 'book']);
+        $newBook->field_bookprice->value = $book["price"];
+        $newBook->field_isbn = $book["@ISBN"];
+        $newBook->title = $book["title"];
+        $rating = $singleComment["@rating"];
+        $commentMsg = trim($singleComment["#"]);
+        //$newBook->save();
+        $addedBooks[] = $newBook;
+      }
+    }
+
+    return array(
+      '#theme' => 'process_xml_new_books',
+      '#books' => $addedBooks
     );
   }
 }

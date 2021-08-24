@@ -12,6 +12,11 @@ function movie_theme($existing, $type, $theme, $path)
       'variables' => array(
         'msg' => ''
       )
+    ),
+    'process_xml_new_books' => array(
+      'variables' => array(
+        'books' => array()
+      )
     )
   );
 }

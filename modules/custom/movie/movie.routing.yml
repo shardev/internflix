@@ -12,3 +12,10 @@ movie.create_table_reservations:
     _title: 'Created new db table: reservations'
   requirements:
     _permission: 'access content'
+movie.process_xml_new_books:
+  path: '/process-xml-new-books'
+  defaults:
+    _controller: '\Drupal\movie\Controller\MovieReservationController::processXMLBooks'
+    _title: 'Processed external URL'
+  requirements:
+    _permission: 'access content'
