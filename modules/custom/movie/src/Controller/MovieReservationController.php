@@ -4,6 +4,7 @@ namespace Drupal\movie\Controller;
 
 use Drupal\book\Plugin\migrate\source\Book;
 use Drupal\Core\Database\Database;
+use Drupal\Core\Queue\RequeueException;
 use Drupal\node\Entity\Node;
 use GuzzleHttp\Exception\RequestException;
 use Laminas\Diactoros\Response\JsonResponse;
@@ -101,33 +102,42 @@ class MovieReservationController
     $url = 'https://www.chilkatsoft.com/xml-samples/bookstore.xml';
     try {
       $response = \Drupal::httpClient()->get($url);
-      $xmlFromResponse = (string) $response->getBody();
+      $xmlFromResponse = (string)$response->getBody();
 
       try {
         $encoder = new XmlEncoder('root');
-        $booksXML = $encoder->decode($xmlFromResponse, 'xml');
-        return $booksXML;
+        return $encoder->decode($xmlFromResponse, 'xml');
       } catch (UnexpectedValueException $e) {
-        return "Error while decoding XML";
-        //throw new InvalidXmlInResponseException($e->getMessage());
+        throw new UnexpectedValueException($e->getMessage());
       }
     } catch (RequestException $e) {
-      return "Error while requesting external URL";
+      throw new RequeueException($e->getMessage());
     }
   }
 
-  function processXMLBooks(){
+  function processXMLBooks()
+  {
     $booksXML = $this->callExternalURL();
     $addedBooks = array();
-    foreach ($booksXML["book"] as $book){
-      foreach($book["comments"]["userComment"] as $singleComment) {
-        $newBook = Node::create(['type' => 'book']);
-        $newBook->field_bookprice->value = $book["price"];
-        $newBook->field_isbn = $book["@ISBN"];
-        $newBook->title = $book["title"];
-        $rating = $singleComment["@rating"];
-        $commentMsg = trim($singleComment["#"]);
-        //$newBook->save();
+
+    foreach ($booksXML["book"] as $book) {
+      if (!empty($book["comments"])) {
+        if (isset($book["comments"]["userComment"]["#"])) {
+          $newBook = $this->createNodeBook($book);
+          $newBook->field_book_comment->value = $book["comments"]["userComment"]["#"];
+          $newBook->save();
+          $addedBooks[] = $newBook;
+        } else {
+          foreach ($book["comments"]["userComment"] as $singleComment) {
+            $newBook = $this->createNodeBook($book);
+            $newBook->field_book_comment->value = $singleComment["#"];
+            $newBook->save();
+            $addedBooks[] = $newBook;
+          }
+        }
+      } else {
+        $newBook = $this->createNodeBook($book);
+        $newBook->save();
         $addedBooks[] = $newBook;
       }
     }
@@ -136,5 +146,15 @@ class MovieReservationController
       '#theme' => 'process_xml_new_books',
       '#books' => $addedBooks
     );
+  }
+
+
+  function createNodeBook($book)
+  {
+    $newBook = Node::create(['type' => 'book']);
+    $newBook->field_bookprice->value = $book["price"];
+    $newBook->field_isbn = $book["@ISBN"];
+    $newBook->title = $book["title"];
+    return $newBook;
   }
 }
