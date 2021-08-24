@@ -59,16 +59,16 @@ jQuery(function () {
       jQuery('<div id="dialog"><div/>').appendTo('#reservationButton')
 
       let htmlForButton = ''
-      if(!availableDaysForMovies[extractedId].length){
+      if (!availableDaysForMovies[extractedId].length) {
         htmlForButton = 'Currently there are not available days for this movie.'
-      }else{
+      } else {
         availableDaysForMovies[extractedId].forEach((day, i) => {
           htmlForButton += "<button class='dayButton' value='" + day + "' id='" + day + "' >" + day + "</button><br><br>"
         })
       }
 
       jQuery('#dialog').dialog({
-        title: "Choose one of available days:",
+        title: "Choose one of available days!!!!!:",
         create: function () {
           jQuery(this).closest('div.ui-dialog')
             .find('button.ui-dialog-titlebar-close')
@@ -92,6 +92,10 @@ jQuery(function () {
     jQuery('<div id="dialog-confirm"><div/>').appendTo('#reservationButton')
     jQuery('#dialog-confirm').html("<p>[FOR TEST: day:" + event.target.id + " movieid:" + event.data.movieId + "]<form><button id='confirmationButton' type='button'> CONFIRM </button></form>")
 
+    // Bind dinamically
+    // $(staticAncestors).on(eventName, dynamicChild, function() {});
+    jQuery('#confirmationButton').on("click", null, {movieId: event.data.movieId}, makeReservation)
+
     jQuery('#dialog-confirm').dialog({
       title: "Confirm your movie reservation",
       create: function () {
@@ -104,5 +108,26 @@ jQuery(function () {
           });
       }
     })
+  }
+
+  function makeReservation(event) {
+    // customerName validation
+    let name = jQuery('#customerName').val()
+    if (name.length === 0) {
+      alert("Name must not be empty.")
+
+    } else if (name.length > 0) {
+      alert("Name must not be longer than 10 chars.")
+
+    } else if (/\d/.test(name)) {
+      alert("Name must not have numbers.")
+
+    } else if (name.charAt(0) !== name.charAt(0).toUpperCase()) {
+      alert("Name must have first capital letter.")
+
+    } else {
+      // Can make reservation
+
+    }
   }
 })
