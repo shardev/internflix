@@ -3,6 +3,9 @@
 namespace Drupal\movie\Controller;
 
 use Laminas\Diactoros\Response\JsonResponse;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class MovieReservationController
 {
@@ -98,25 +101,17 @@ class MovieReservationController
 
   public function exportToXML($dataOnly)
   {
-    $header = array('movie_id', 'title', 'description', 'days_available');
-    $xml = "<root>\n";
-    foreach ($dataOnly as $row) {
-      $xml .= "\t<movie>\n";
-      $i = 0;
-      foreach ($row as $value) {
-        $xml .= "\t\t<" . $header[$i] . ">" . $value . "</" . $header[$i] . ">\n";
-        $i++;
-      }
-      $xml .= "\t</movie>\n";
-    }
-    $xml .= "</root>";
+    $xmlEncoder = new XmlEncoder();
+    $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('xml' => $xmlEncoder));
+    $xml = $serializer->serialize($dataOnly, 'xml');
+
     $fileName = 'exported_movies.xml';
     header('Content-Description: File Transfer');
     header('Content-Type: text/xml');
     header('Content-Disposition: attachment; filename="' . $fileName . '"');
-
     $xmlFile = fopen($fileName, 'w');
     fwrite($xmlFile, $xml);
+
     flush();
     readfile($fileName);
     fclose($xmlFile);

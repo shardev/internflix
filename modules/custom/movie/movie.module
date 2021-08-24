@@ -16,18 +16,19 @@ function movie_theme($existing, $type, $theme, $path)
   );
 }
 
-//function movie_menu() {
-//  $items['admin/movie-exporter'] = array(
-//    'title' => 'Export movies to external file',
-//    'page callback' => 'exporter_page_callback',
-//    'access arguments' => array('access administration menu'),
-//  );
-//
-//  return $items;
-//}
-//
-//function exporter_page_callback(){
-//  return '<h1>String test!</h1>';
-//  //return theme('exporter_page');
-//}
+function movie_menu() {
+  $items['admin/movie-exporter'] = array(
+    'title' => 'Export movies to external file',
+    'type' => MENU_LOCAL_TASK,
+    'page callback' => 'exporter_page_callback',
+    'access arguments' => array('access administration menu'),
+  );
+
+  return $items;
+}
+
+function exporter_page_callback(){
+  return '<h1>String test!</h1>';
+  //return theme('exporter_page');
+}
 
