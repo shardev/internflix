@@ -2,6 +2,8 @@ jQuery(function () {
   let availableDaysForMovies = []
   let popupOpened = false
   let confirmationPopupOpened = false
+  let extractedId = -1
+  let selectedDay = ''
 
   jQuery("#searchButton").click(function () {
     const genre = document.getElementById('movie-genre').value;
@@ -47,7 +49,7 @@ jQuery(function () {
   })
 
   function availableDaysPopupHandler(event) {
-    const extractedId = event.data.divID.slice(10, 11) // pattern: movieitem-id
+    extractedId = event.data.divID.slice(10, 11) // pattern: movieitem-id
     availableDaysForMovies[extractedId] = [];
     [...jQuery('#available-days-' + extractedId).children()].forEach((day, i) => {
       availableDaysForMovies[extractedId].push(day.dataset.day)
@@ -68,7 +70,7 @@ jQuery(function () {
       }
 
       jQuery('#dialog').dialog({
-        title: "Choose one of available days!!!!!:",
+        title: "Choose one of available days:",
         create: function () {
           jQuery(this).closest('div.ui-dialog')
             .find('button.ui-dialog-titlebar-close')
@@ -90,11 +92,8 @@ jQuery(function () {
     confirmationPopupOpened = true
     jQuery('#dialog').remove()
     jQuery('<div id="dialog-confirm"><div/>').appendTo('#reservationButton')
-    jQuery('#dialog-confirm').html("<p>[FOR TEST: day:" + event.target.id + " movieid:" + event.data.movieId + "]<form><button id='confirmationButton' type='button'> CONFIRM </button></form>")
-
-    // Bind dinamically
-    // $(staticAncestors).on(eventName, dynamicChild, function() {});
-    jQuery('#confirmationButton').on("click", null, {movieId: event.data.movieId}, makeReservation)
+    selectedDay = event.target.id
+    jQuery('#dialog-confirm').html("<p>Day: " + selectedDay + ", movieid:" + event.data.movieId + "<form><button id='confirmationButton' type='button'> CONFIRM </button></form>")
 
     jQuery('#dialog-confirm').dialog({
       title: "Confirm your movie reservation",
@@ -110,24 +109,20 @@ jQuery(function () {
     })
   }
 
-  function makeReservation(event) {
+  jQuery(document).on("click", '#confirmationButton' ,function (event){
     // customerName validation
     let name = jQuery('#customerName').val()
     if (name.length === 0) {
       alert("Name must not be empty.")
-
-    } else if (name.length > 0) {
+    } else if (name.length > 10) {
       alert("Name must not be longer than 10 chars.")
-
     } else if (/\d/.test(name)) {
       alert("Name must not have numbers.")
-
     } else if (name.charAt(0) !== name.charAt(0).toUpperCase()) {
       alert("Name must have first capital letter.")
-
     } else {
       // Can make reservation
-
+      alert("Making reservation for customer: " + name + " for movie: " + extractedId + " at day: " + selectedDay)
     }
-  }
+  })
 })
