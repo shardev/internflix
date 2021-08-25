@@ -118,9 +118,10 @@ jQuery(function () {
         data: {"customer_name": name, "day_of_reservation" : selectedDay, "movie_id" : extractedId },
         success: function (response) {
           alert("Successfully made reservation!")
-          document.open()
-          document.write(response)
-          document.close()
+          // document.open()
+          // document.write(response)
+          // document.close()
+          location.reload(true);
         },
         error: function (jqXHR, textStatus, errorThrown) {
           console.log(textStatus, errorThrown);

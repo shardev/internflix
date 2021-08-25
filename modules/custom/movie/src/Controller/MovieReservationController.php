@@ -45,16 +45,15 @@ class MovieReservationController
   {
     $msg = 'Table [reservations] already exists.';
 
-    if (!Database::getConnection()->schema()->tableExists('reservations')) {
+    if (!Database::getConnection()->schema()->tableExists('reservations3')) {
       $msg = 'Table [reservations] successfully created.';
       $newTable = array(
         'description' => 'When user clicks at reservation button we store entity that represents movie for reservation',
         'fields' => array(
           'res_id' => array(
             'description' => 'The primary identifier for a reservation.',
-            'type' => 'int',
-            'unsigned' => TRUE,
-            'not null' => TRUE,
+            'type' => 'serial',
+            'not null' => TRUE
           ),
           'day_of_reservation' => array(
             'description' => 'Available day that user selected',
@@ -87,10 +86,10 @@ class MovieReservationController
             'not null' => TRUE
           ),
         ),
-        'primary_key' => array('res_id')
+        'primary key' => array('res_id')
       );
 
-      Database::getConnection()->schema()->createTable('reservations', $newTable);
+      Database::getConnection()->schema()->createTable('reservations3', $newTable);
     }
 
     return array(
@@ -173,9 +172,8 @@ class MovieReservationController
       $genres .= $genre->get("name")->getValue()[0]["value"] . " ";
     }
 
-    $result = \Drupal::database()->insert('reservations')
+    $result = \Drupal::database()->insert('reservations3')
       ->fields([
-        'res_id' => $this::$insertedReservationId++,
         'customer_name' => $customerNameProvided,
         'day_of_reservation' => $dayOfReservationProvided,
         'time_of_reservation' => \Drupal::time()->getRequestTime(),
