@@ -14,6 +14,8 @@ use Symfony\Component\Serializer\Exception\UnexpectedValueException;
 class MovieReservationController
 {
 
+  private static $insertedReservationId = 1; // just for testing purposes
+
   public function startMovieReservation()
   {
     $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree('genre');
@@ -148,7 +150,6 @@ class MovieReservationController
     );
   }
 
-
   function createNodeBook($book)
   {
     $newBook = Node::create(['type' => 'book']);
@@ -156,5 +157,31 @@ class MovieReservationController
     $newBook->field_isbn = $book["@ISBN"];
     $newBook->title = $book["title"];
     return $newBook;
+  }
+
+  function saveReservation()
+  {
+    $customerNameProvided = \Drupal::request()->query->get('customer_name');
+    $dayOfReservationProvided = \Drupal::request()->query->get('day_of_reservation');
+    $movieIdProvided = \Drupal::request()->query->get('movie_id');
+
+    $movie = \Drupal\node\Entity\Node::load($movieIdProvided);
+    $title = $movie->getTitle();
+
+    $referencedGenres = $movie->get("field_movie_genre")->referencedEntities();
+    foreach ($referencedGenres as $genre) {
+      $genres .= $genre->get("name")->getValue()[0]["value"] . " ";
+    }
+
+    $result = \Drupal::database()->insert('reservations')
+      ->fields([
+        'res_id' => $this::$insertedReservationId++,
+        'customer_name' => $customerNameProvided,
+        'day_of_reservation' => $dayOfReservationProvided,
+        'time_of_reservation' => \Drupal::time()->getRequestTime(),
+        'reserved_movie_name' => $title,
+        'reserved_movie_genre' => $genres
+      ])->execute();
+    return $this->startMovieReservation();
   }
 }

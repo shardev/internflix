@@ -19,3 +19,10 @@ movie.process_xml_new_books:
     _title: 'Processed external URL'
   requirements:
     _permission: 'access content'
+movie.save_reservation:
+  path: '/reservations'
+  defaults:
+    _controller: '\Drupal\movie\Controller\MovieReservationController::saveReservation'
+    _title: 'Save reservation'
+  requirements:
+    _permission: 'access content'

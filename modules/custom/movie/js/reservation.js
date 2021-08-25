@@ -112,7 +112,20 @@ jQuery(function () {
   jQuery(document).on("click", '#confirmationButton' ,function (event){
     let name = jQuery('#customerName').val()
     if (/^[A-Z][A-Za-z_-]{1,10}$/.test(name)){
-      alert("Making reservation for customer: " + name + " for movie: " + extractedId + " at day: " + selectedDay)
+      jQuery.ajax({
+        url: "/reservations",
+        type: "get",
+        data: {"customer_name": name, "day_of_reservation" : selectedDay, "movie_id" : extractedId },
+        success: function (response) {
+          alert("Successfully made reservation!")
+          document.open()
+          document.write(response)
+          document.close()
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.log(textStatus, errorThrown);
+        }
+      });
     } else {
       alert("Please enter name with capital first letter, not longer than 10 chars, without numbers.")
     }
