@@ -40,7 +40,7 @@ jQuery(function () {
       clickedDiv.addClass("active")
 
       jQuery(('#' + clickedDiv.attr('id'))).after(`<div id="reservationButton"><button>Reserve movie</button></div>`)
-      jQuery("#reservationButton").on("click", null, {divID: clickedDiv.attr('id')}, availableDaysPopupHandler)
+      jQuery("#reservationButton").on("click", null, {divID: clickedDiv.attr('id'), movieitemID : clickedDiv.attr("data-movieitemid")}, availableDaysPopupHandler)
     } else {
       clickedDiv.removeClass("active")
       clickedDiv.addClass("inactive")
@@ -49,7 +49,7 @@ jQuery(function () {
   })
 
   function availableDaysPopupHandler(event) {
-    extractedId = event.data.divID.split("-")[1] // pattern: movieitem-id
+    extractedId = event.data.movieitemID
     availableDaysForMovies[extractedId] = [];
     [...jQuery('#available-days-' + extractedId).children()].forEach((day, i) => {
       availableDaysForMovies[extractedId].push(day.dataset.day)
