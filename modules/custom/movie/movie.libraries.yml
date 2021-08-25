@@ -5,6 +5,5 @@ movie_custom_library:
       css/movieitem.css: {}
   js:
     js/reservation.js: {}
-    js/validations.js: {}
   dependencies:
     - core/jquery
