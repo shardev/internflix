@@ -49,7 +49,7 @@ jQuery(function () {
   })
 
   function availableDaysPopupHandler(event) {
-    extractedId = event.data.divID.slice(10, 11) // pattern: movieitem-id
+    extractedId = event.data.divID.split("-")[1] // pattern: movieitem-id
     availableDaysForMovies[extractedId] = [];
     [...jQuery('#available-days-' + extractedId).children()].forEach((day, i) => {
       availableDaysForMovies[extractedId].push(day.dataset.day)
@@ -110,19 +110,11 @@ jQuery(function () {
   }
 
   jQuery(document).on("click", '#confirmationButton' ,function (event){
-    // customerName validation
     let name = jQuery('#customerName').val()
-    if (name.length === 0) {
-      alert("Name must not be empty.")
-    } else if (name.length > 10) {
-      alert("Name must not be longer than 10 chars.")
-    } else if (/\d/.test(name)) {
-      alert("Name must not have numbers.")
-    } else if (name.charAt(0) !== name.charAt(0).toUpperCase()) {
-      alert("Name must have first capital letter.")
-    } else {
-      // Can make reservation
+    if (/^[A-Z][A-Za-z_-]{1,10}$/.test(name)){
       alert("Making reservation for customer: " + name + " for movie: " + extractedId + " at day: " + selectedDay)
+    } else {
+      alert("Please enter name with capital first letter, not longer than 10 chars, without numbers.")
     }
   })
 })
