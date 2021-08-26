@@ -1,0 +1,23 @@
+uuid: 36a9ae65-8542-4da7-bb1d-0159bc26684b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_include_in_exporter
+    - node.type.movie
+id: node.movie.field_include_in_exporter
+field_name: field_include_in_exporter
+entity_type: node
+bundle: movie
+label: include_in_exporter
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

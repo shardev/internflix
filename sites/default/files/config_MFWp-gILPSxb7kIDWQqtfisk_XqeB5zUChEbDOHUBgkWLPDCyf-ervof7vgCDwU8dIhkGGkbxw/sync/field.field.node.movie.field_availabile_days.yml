@@ -1,0 +1,21 @@
+uuid: 84ea2c0a-c291-49a4-bc45-069462674700
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_availabile_days
+    - node.type.movie
+  module:
+    - options
+id: node.movie.field_availabile_days
+field_name: field_availabile_days
+entity_type: node
+bundle: movie
+label: available_days
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_integer

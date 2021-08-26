@@ -1,0 +1,22 @@
+uuid: de94a793-cb5e-43f2-8673-8ac006a440cb
+langcode: en
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - danland
+_core:
+  default_config_hash: Un8sX1XhL9SINI_rE_YXDFHzdCDZr54OQHROhScyZXo
+id: danland_help
+theme: danland
+region: header
+weight: -30
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  provider: help
+  label_display: '0'
+visibility: {  }

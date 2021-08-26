@@ -1,0 +1,78 @@
+uuid: 200533e6-8967-4b63-968a-4d986e468f97
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.movie.field_attendants_number
+    - field.field.node.movie.field_availabile_days
+    - field.field.node.movie.field_description
+    - field.field.node.movie.field_include_in_exporter
+    - field.field.node.movie.field_movie_cover_image
+    - field.field.node.movie.field_movie_genre
+    - node.type.movie
+  module:
+    - image
+    - options
+    - text
+    - user
+id: node.movie.default
+targetEntityType: node
+bundle: movie
+mode: default
+content:
+  field_attendants_number:
+    weight: 107
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+    region: content
+  field_availabile_days:
+    weight: 105
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_description:
+    weight: 103
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_include_in_exporter:
+    weight: 106
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_movie_cover_image:
+    weight: 102
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+  field_movie_genre:
+    weight: 104
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

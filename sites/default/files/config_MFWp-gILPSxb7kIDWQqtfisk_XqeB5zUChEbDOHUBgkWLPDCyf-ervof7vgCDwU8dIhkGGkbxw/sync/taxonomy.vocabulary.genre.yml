@@ -1,0 +1,8 @@
+uuid: 0aa99c01-a58e-4547-bdbc-cbe87c96fd8d
+langcode: en
+status: true
+dependencies: {  }
+name: Genre
+vid: genre
+description: 'Movie genre categorize movies.'
+weight: 0

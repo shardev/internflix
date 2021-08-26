@@ -1,0 +1,18 @@
+uuid: 3bd6ecb3-78f6-4afb-883d-8d0b22623cc9
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_bookprice
+field_name: field_bookprice
+entity_type: node
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

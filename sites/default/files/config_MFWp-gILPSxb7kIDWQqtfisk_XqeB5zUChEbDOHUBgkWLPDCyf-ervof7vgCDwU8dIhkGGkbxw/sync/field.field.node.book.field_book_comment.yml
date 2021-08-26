@@ -1,0 +1,21 @@
+uuid: 90cae482-2bf5-42c2-80d3-639a508720ea
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_book_comment
+    - node.type.book
+  module:
+    - text
+id: node.book.field_book_comment
+field_name: field_book_comment
+entity_type: node
+bundle: book
+label: book_comment
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

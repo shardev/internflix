@@ -1,0 +1,22 @@
+uuid: 15e51c76-5e3a-4995-a948-612a492ebd93
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - danland
+_core:
+  default_config_hash: jSZmBCcqYQr4kmUhNkVI9zUV2XDiMifu16gBSehH8jg
+id: danland_content
+theme: danland
+region: content
+weight: 1
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  provider: system
+  label_display: '0'
+visibility: {  }
