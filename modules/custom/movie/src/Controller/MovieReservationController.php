@@ -8,6 +8,8 @@ use Drupal\Core\Queue\RequeueException;
 use Drupal\node\Entity\Node;
 use GuzzleHttp\Exception\RequestException;
 use Laminas\Diactoros\Response\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Exception\UnexpectedValueException;
 
@@ -158,7 +160,7 @@ class MovieReservationController
     return $newBook;
   }
 
-  function saveReservation()
+  function saveReservation(Response $response, Request $request)
   {
     $customerNameProvided = \Drupal::request()->query->get('customer_name');
     $dayOfReservationProvided = \Drupal::request()->query->get('day_of_reservation');
@@ -180,6 +182,11 @@ class MovieReservationController
         'reserved_movie_name' => $title,
         'reserved_movie_genre' => $genres
       ])->execute();
-    return $this->startMovieReservation();
+
+    $response->headers->set('X-Drupal-Dynamic-Cache', 'HIT');
+    return array(
+      '#theme' => 'save_reservation',
+      '#msg' => 'Successfully made reservation!'
+    );
   }
 }

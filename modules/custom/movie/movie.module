@@ -17,6 +17,11 @@ function movie_theme($existing, $type, $theme, $path)
       'variables' => array(
         'books' => array()
       )
+    ),
+    'save_reservation' => array(
+      'variables' => array(
+        'msg' => ''
+      )
     )
   );
 }
