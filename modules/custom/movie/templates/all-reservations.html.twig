@@ -1,0 +1,10 @@
+<h1>All reservations:</h1>
+<br>
+{% for reservation in reservations %}
+  <div>
+    <h3>{{ reservation.reserved_movie_name }}</h3>
+    <p>Reservation time: {{ reservation.time_of_reservation|date }} made for {{ reservation.day_of_reservation }}, by:
+      <b>{{ reservation.customer_name }}</b></p>
+    <hr>
+  </div>
+{% endfor %}

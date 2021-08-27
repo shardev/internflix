@@ -198,4 +198,14 @@ class MovieReservationController
       '#msg' => 'Successfully made reservation!'
     );
   }
+
+  function allReservations(){
+    $reservations = \Drupal::database()->select('reservations', 'r')
+      ->fields('r')->execute()->fetchAll();;
+
+    return array(
+      '#theme' => 'all_reservations',
+      '#reservations' => $reservations
+    );
+  }
 }

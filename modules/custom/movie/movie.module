@@ -22,6 +22,11 @@ function movie_theme($existing, $type, $theme, $path)
       'variables' => array(
         'msg' => ''
       )
+    ),
+    'all_reservations' => array(
+      'variables' => array(
+        'reservations' => array()
+      )
     )
   );
 }
