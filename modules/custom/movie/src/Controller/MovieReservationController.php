@@ -200,6 +200,10 @@ class MovieReservationController
     );
   }
 
+  /**
+   * Number of attendants check for movie: if the maximum of attendants is reached exclude available day.
+   * @return mixed
+   */
   private function checkAvailableDays($nodes)
   {
     foreach ($nodes as $movie) {
