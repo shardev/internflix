@@ -7,7 +7,6 @@ jQuery(function () {
 
   jQuery("#searchButton").click(function () {
     const genre = document.getElementById('movie-genre').value;
-
     jQuery.ajax({
       url: "/start-movie-reservation",
       type: "get",

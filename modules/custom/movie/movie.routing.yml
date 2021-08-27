@@ -4,7 +4,7 @@ movie.start_reservation:
     _controller: '\Drupal\movie\Controller\MovieReservationController::startMovieReservation'
     _title: 'Start movie reservation'
   requirements:
-    _permission: 'access content'
+    _permission: 'TRUE'
 movie.create_table_reservations:
   path: '/create-table-reservations'
   defaults:

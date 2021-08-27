@@ -35,6 +35,7 @@ class MovieReservationController
     }
     $node_ids = $query->execute();
     $nodes = \Drupal\node\Entity\Node::loadMultiple($node_ids);
+    $nodes = $this->checkAvailableDays($nodes);
 
     return array(
       '#theme' => 'start_movie_reservation',
@@ -197,5 +198,63 @@ class MovieReservationController
       '#theme' => 'save_reservation',
       '#msg' => 'Successfully made reservation!'
     );
+  }
+
+  /**
+   * Number of attendants check for movie: if the maximum of attendants is reached exclude available day.
+   * @return mixed
+   */
+  private function checkAvailableDays($nodes)
+  {
+    foreach ($nodes as $movie) {
+      $maxAttendantsForMovie = $movie->field_attendants_number->getValue()[0]["value"];
+      $reservationsForMovie = $this->getReservationsForMovie($movie);
+
+      $dayCounter = array();
+      foreach ($reservationsForMovie as $reservation) {
+        if (!isset($dayCounter[$reservation->day_of_reservation])) {
+          $dayCounter[$reservation->day_of_reservation] = 0;
+        }
+        $dayCounter[$reservation->day_of_reservation]++;
+        $availableDaysForMovie = $this->getAvailableDays($movie);
+
+        if ($dayCounter[$reservation->day_of_reservation] >= $maxAttendantsForMovie) {
+          $final = $this->excludeAvailableDay($availableDaysForMovie, $reservation);
+          $movie->set('field_availabile_days', $final);
+        }
+      }
+    }
+
+    return $nodes;
+  }
+
+  private function getReservationsForMovie($movie)
+  {
+    $reservationsForMovie = \Drupal::database()->select('reservations', 'r')
+      ->fields('r', ['reserved_movie_name', 'day_of_reservation'])
+      ->condition('reserved_movie_name', $movie->getTitle())->execute()->fetchAll();
+    return $reservationsForMovie;
+  }
+
+
+  private function getAvailableDays($movie)
+  {
+    $allowed_values = $movie->field_availabile_days->getSetting('allowed_values');
+    $availableDaysForMovie = [];
+    foreach ($movie->field_availabile_days->getValue() as $numberDay) {
+      $availableDaysForMovie[$numberDay["value"]] = $allowed_values[$numberDay["value"]];
+    }
+    return $availableDaysForMovie;
+  }
+
+
+  private function excludeAvailableDay($availableDaysForMovie, $reservation)
+  {
+    $withoutDay = array_diff($availableDaysForMovie, array($reservation->day_of_reservation)) + array_diff(array($reservation->day_of_reservation), $availableDaysForMovie);
+    $final = [];
+    foreach ($withoutDay as $key => $wDay) {
+      array_push($final, ["value" => $key]);
+    }
+    return $final;
   }
 }
