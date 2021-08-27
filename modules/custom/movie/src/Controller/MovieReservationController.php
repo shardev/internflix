@@ -199,6 +199,10 @@ class MovieReservationController
     );
   }
 
+  /**
+   * Return all reservations made in our system.
+   * @return string[]
+   */
   function allReservations(){
     $reservations = \Drupal::database()->select('reservations', 'r')
       ->fields('r')->execute()->fetchAll();;
