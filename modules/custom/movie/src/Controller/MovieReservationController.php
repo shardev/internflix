@@ -200,13 +200,31 @@ class MovieReservationController
   }
 
   /**
-   * Return all reservations made in our system.
+   * Return all reservations made in our system. It is available to sort by one of criteria.
    * @return string[]
    */
-  function allReservations(){
-    $reservations = \Drupal::database()->select('reservations', 'r')
-      ->fields('r')->execute()->fetchAll();;
+  function allReservations()
+  {
+    $query = \Drupal::database()->select('reservations', 'r')
+      ->fields('r');
 
+    $sortTypeProvided = \Drupal::request()->query->get('filterType');
+    if (!empty($sortTypeProvided)) {
+      if ($sortTypeProvided == "A-Z") {
+        $query->orderBy('customer_name', 'ASC');
+      }
+      else if($sortTypeProvided == "Z-A"){
+        $query->orderBy('customer_name', 'DESC');
+      }
+      else if($sortTypeProvided == "newestFirst"){
+        $query->orderBy('time_of_reservation', 'DESC');
+      }
+      else if($sortTypeProvided == "oldestFirst"){
+        $query->orderBy('time_of_reservation', 'ASC');
+      }
+    }
+
+    $reservations = $query->execute()->fetchAll();
     return array(
       '#theme' => 'all_reservations',
       '#reservations' => $reservations

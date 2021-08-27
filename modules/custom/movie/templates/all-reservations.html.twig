@@ -1,5 +1,17 @@
 <h1>All reservations:</h1>
 <br>
+<form action="/all-reservations" method="get">
+  <label for="filterType">Sort:</label>
+  <select name="filterType" id="filterType">
+    <option value="A-Z">Alphabetically ascending</option>
+    <option value="Z-A">Alphabetically descending</option>
+    <option value="newestFirst">From newest to oldest</option>
+    <option value="oldestFirst">From oldest to newest</option>
+  </select>
+  <button type="submit">Sort</button>
+</form>
+
+<br>
 {% for reservation in reservations %}
   <div>
     <h3>{{ reservation.reserved_movie_name }}</h3>
