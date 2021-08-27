@@ -183,7 +183,6 @@ class MovieReservationController
         'reserved_movie_genre' => $genres
       ])->execute();
 
-//    $response->headers->set('X-Drupal-Dynamic-Cache', 'HIT');
     return array(
       '#theme' => 'save_reservation',
       '#msg' => 'Successfully made reservation!'
