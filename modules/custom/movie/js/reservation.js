@@ -40,7 +40,10 @@ jQuery(function () {
       clickedDiv.addClass("active")
 
       jQuery(('#' + clickedDiv.attr('id'))).after(`<div id="reservationButton"><button>Reserve movie</button></div>`)
-      jQuery("#reservationButton").on("click", null, {divID: clickedDiv.attr('id'), movieitemID : clickedDiv.attr("data-movieitemid")}, availableDaysPopupHandler)
+      jQuery("#reservationButton").on("click", null, {
+        divID: clickedDiv.attr('id'),
+        movieitemID: clickedDiv.attr("data-movieitemid")
+      }, availableDaysPopupHandler)
     } else {
       clickedDiv.removeClass("active")
       clickedDiv.addClass("inactive")
@@ -109,20 +112,25 @@ jQuery(function () {
     })
   }
 
-  jQuery(document).on("click", '#confirmationButton' ,function (event){
+  jQuery(document).on("click", '#confirmationButton', function (event) {
     let name = jQuery('#customerName').val()
-    if (/^[A-Z][A-Za-z_-]{1,10}$/.test(name)){
+    if (/^[A-Z][A-Za-z_-]{1,10}$/.test(name)) {
       jQuery.ajax({
-        url: "/reservations",
+        url: "/save-reservation",
         type: "post",
-        data: {"customer_name": name, "day_of_reservation" : selectedDay, "movie_id" : extractedId },
+        data: {
+          "reservation_data": {
+            "customer_name": name,
+            "day_of_reservation": selectedDay,
+            "movie_id": extractedId}
+        },
         success: function (response) {
           document.open()
           document.write(response)
           document.close()
         },
         error: function (jqXHR, textStatus, errorThrown) {
-          console.log(textStatus, errorThrown);
+          jQuery("html").html("<p>Error occurred while making reservation. </br> <input type='submit' onclick=\"window.history.go(-1); return false;\">Go back</input> ")
         }
       });
     } else {

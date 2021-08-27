@@ -8,16 +8,16 @@ use Drupal\Core\Queue\RequeueException;
 use Drupal\node\Entity\Node;
 use GuzzleHttp\Exception\RequestException;
 use Laminas\Diactoros\Response\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Exception\UnexpectedValueException;
 
 class MovieReservationController
 {
 
-  private static $insertedReservationId = 1; // just for testing purposes
-
+  /**
+   * Handling landing page for making reservation.
+   * @return array
+   */
   public function startMovieReservation()
   {
     $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree('genre');
@@ -43,11 +43,15 @@ class MovieReservationController
     );
   }
 
+  /**
+   * Defining and creating table 'reservation' if it does not exist.
+   * @return string[]
+   */
   public function createReservationsTable()
   {
     $msg = 'Table [reservations] already exists.';
 
-    if (!Database::getConnection()->schema()->tableExists('reservations3')) {
+    if (!Database::getConnection()->schema()->tableExists('reservations')) {
       $msg = 'Table [reservations] successfully created.';
       $newTable = array(
         'description' => 'When user clicks at reservation button we store entity that represents movie for reservation',
@@ -91,7 +95,7 @@ class MovieReservationController
         'primary key' => array('res_id')
       );
 
-      Database::getConnection()->schema()->createTable('reservations3', $newTable);
+      Database::getConnection()->schema()->createTable('reservations', $newTable);
     }
 
     return array(
@@ -100,6 +104,10 @@ class MovieReservationController
     );
   }
 
+  /**
+   * Method which calls external URL to collect data about book reviews and process it in format which user provided.
+   * @return array|mixed|string
+   */
   function callExternalURL()
   {
     $url = 'https://www.chilkatsoft.com/xml-samples/bookstore.xml';
@@ -160,26 +168,28 @@ class MovieReservationController
     return $newBook;
   }
 
+  /**
+   * Make new reservation. Data came from ajax request.
+   * @return string[]
+   */
   function saveReservation()
   {
-    $customerNameProvided = \Drupal::request()->get('customer_name');
-    $dayOfReservationProvided = \Drupal::request()->get('day_of_reservation');
-    $movieIdProvided = \Drupal::request()->get('movie_id');
+    $reservationDataProvided = \Drupal::request()->get('reservation_data');
+    $movie = \Drupal\node\Entity\Node::load($reservationDataProvided["movie_id"]);
 
-    $movie = \Drupal\node\Entity\Node::load($movieIdProvided);
-    $title = $movie->getTitle();
-
-    $referencedGenres = $movie->get("field_movie_genre")->referencedEntities();
-    foreach ($referencedGenres as $genre) {
-      $genres .= $genre->get("name")->getValue()[0]["value"] . " ";
+    $genres = "";
+    if (!empty($movie->field_movie_genre)) {
+      foreach ($movie->field_movie_genre as $term_id => $term) {
+        $genres .= \Drupal\taxonomy\Entity\Term::load($term_id + 1)->get('name')->value . " ";
+      }
     }
 
-    $result = \Drupal::database()->insert('reservations3')
+    \Drupal::database()->insert('reservations')
       ->fields([
-        'customer_name' => $customerNameProvided,
-        'day_of_reservation' => $dayOfReservationProvided,
+        'customer_name' => $reservationDataProvided["customer_name"],
+        'day_of_reservation' => $reservationDataProvided["day_of_reservation"],
         'time_of_reservation' => \Drupal::time()->getRequestTime(),
-        'reserved_movie_name' => $title,
+        'reserved_movie_name' => $movie->getTitle(),
         'reserved_movie_genre' => $genres
       ])->execute();
 
