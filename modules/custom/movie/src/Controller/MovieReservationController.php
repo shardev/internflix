@@ -35,6 +35,7 @@ class MovieReservationController
     }
     $node_ids = $query->execute();
     $nodes = \Drupal\node\Entity\Node::loadMultiple($node_ids);
+    $nodes = $this->checkAvailableDays($nodes);
 
     return array(
       '#theme' => 'start_movie_reservation',
@@ -198,4 +199,35 @@ class MovieReservationController
       '#msg' => 'Successfully made reservation!'
     );
   }
+
+  private function checkAvailableDays($nodes)
+  {
+    foreach ($nodes as $movie) {
+      $maxAttendantsForMovie = $movie->field_attendants_number->getValue()[0]["value"];
+      $reservationsForMovie = \Drupal::database()->select('reservations', 'r')
+        ->fields('r', ['reserved_movie_name', 'day_of_reservation'])
+        ->condition('reserved_movie_name', $movie->getTitle())->execute()->fetchAll();
+
+      $dayCounter = array();
+      foreach ($reservationsForMovie as $reservation) {
+        if(!isset($dayCounter[$reservation->day_of_reservation])){ $dayCounter[$reservation->day_of_reservation] = 0; }
+        $dayCounter[$reservation->day_of_reservation]++;
+        $allowed_values = $movie->field_availabile_days->getSetting('allowed_values');
+
+        $finalAllowed = [];
+        foreach ($movie->field_availabile_days->getValue() as $numberDay) { $finalAllowed[$numberDay["value"]] = $allowed_values[$numberDay["value"]]; }
+
+        if ($dayCounter[$reservation->day_of_reservation] >= $maxAttendantsForMovie) {
+          // exclude day
+          $withoutDay = array_diff($finalAllowed, array($reservation->day_of_reservation)) + array_diff(array($reservation->day_of_reservation), $finalAllowed);
+          $final = [];
+          foreach ($withoutDay as $key => $wDay) { array_push($final, ["value" => $key]); }
+          $movie->set('field_availabile_days', $final);
+        }
+      }
+    }
+
+    return $nodes;
+  }
+
 }
