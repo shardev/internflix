@@ -24,6 +24,6 @@ movie.save_reservation:
   defaults:
     _controller: '\Drupal\movie\Controller\MovieReservationController::saveReservation'
     _title: 'Save reservation'
-  methods:  [GET]
+  methods:  [POST]
   requirements:
     _permission: 'TRUE'

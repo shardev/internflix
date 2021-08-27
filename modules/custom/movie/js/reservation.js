@@ -112,18 +112,14 @@ jQuery(function () {
   jQuery(document).on("click", '#confirmationButton' ,function (event){
     let name = jQuery('#customerName').val()
     if (/^[A-Z][A-Za-z_-]{1,10}$/.test(name)){
-      debugger
       jQuery.ajax({
-
         url: "/reservations",
-        type: "get",
+        type: "post",
         data: {"customer_name": name, "day_of_reservation" : selectedDay, "movie_id" : extractedId },
         success: function (response) {
-          debugger
           document.open()
           document.write(response)
           document.close()
-          // location.reload(true);
         },
         error: function (jqXHR, textStatus, errorThrown) {
           console.log(textStatus, errorThrown);

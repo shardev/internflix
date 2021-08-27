@@ -160,11 +160,11 @@ class MovieReservationController
     return $newBook;
   }
 
-  function saveReservation(Response $response, Request $request)
+  function saveReservation()
   {
-    $customerNameProvided = \Drupal::request()->query->get('customer_name');
-    $dayOfReservationProvided = \Drupal::request()->query->get('day_of_reservation');
-    $movieIdProvided = \Drupal::request()->query->get('movie_id');
+    $customerNameProvided = \Drupal::request()->get('customer_name');
+    $dayOfReservationProvided = \Drupal::request()->get('day_of_reservation');
+    $movieIdProvided = \Drupal::request()->get('movie_id');
 
     $movie = \Drupal\node\Entity\Node::load($movieIdProvided);
     $title = $movie->getTitle();
@@ -183,7 +183,7 @@ class MovieReservationController
         'reserved_movie_genre' => $genres
       ])->execute();
 
-    $response->headers->set('X-Drupal-Dynamic-Cache', 'HIT');
+//    $response->headers->set('X-Drupal-Dynamic-Cache', 'HIT');
     return array(
       '#theme' => 'save_reservation',
       '#msg' => 'Successfully made reservation!'
