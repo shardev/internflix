@@ -5,5 +5,7 @@ movie_custom_library:
       css/movieitem.css: {}
   js:
     js/reservation.js: {}
+    js/subscribe.js: {}
   dependencies:
     - core/jquery
+    - drupal/country_state_city

@@ -27,3 +27,20 @@ movie.save_reservation:
   methods:  [POST]
   requirements:
     _permission: 'TRUE'
+
+movie.create_table_subscriptions:
+  path: '/create-table-subscriptions'
+  defaults:
+    _controller: '\Drupal\movie\Controller\SubscriptionController::createSubscriptionsTable'
+    _title: 'Created new db table: subscriptions'
+  requirements:
+    _permission: 'access content'
+
+movie.save_subscription:
+  path: '/save-subscription'
+  defaults:
+    _controller: '\Drupal\movie\Controller\SubscriptionController::saveSubscription'
+    _title: 'Save subscription'
+  methods:  [POST]
+  requirements:
+    _permission: 'TRUE'

@@ -22,6 +22,16 @@ function movie_theme($existing, $type, $theme, $path)
       'variables' => array(
         'msg' => ''
       )
-    )
+    ),
+    'create_table_subscriptions' => array(
+      'variables' => array(
+        'msg' => ''
+      )
+    ),
+    'save_subscription' => array(
+      'variables' => array(
+        'msg' => ''
+      )
+    ),
   );
 }

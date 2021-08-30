@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '1510d96c431501a0b18c96c53bd4d5f1a07f1f68',
+        'reference' => '4cdc422719e0593b8ff8bc92dd160e72bb9c4d42',
         'name' => 'drupal/legacy-project',
         'dev' => true,
     ),
@@ -400,6 +400,15 @@
                 0 => '9.2.3',
             ),
         ),
+        'drupal/country_state_city' => array(
+            'pretty_version' => '2.1.0',
+            'version' => '2.1.0.0',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../modules/contrib/country_state_city',
+            'aliases' => array(),
+            'reference' => '8.x-2.1',
+            'dev_requirement' => false,
+        ),
         'drupal/datetime' => array(
             'dev_requirement' => false,
             'replaced' => array(
@@ -547,7 +556,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '1510d96c431501a0b18c96c53bd4d5f1a07f1f68',
+            'reference' => '4cdc422719e0593b8ff8bc92dd160e72bb9c4d42',
             'dev_requirement' => false,
         ),
         'drupal/link' => array(
