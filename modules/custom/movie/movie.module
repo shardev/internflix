@@ -25,7 +25,9 @@ function movie_theme($existing, $type, $theme, $path)
     ),
     'all_reservations' => array(
       'variables' => array(
-        'reservations' => array()
+        'reservations' => array(),
+        'genres' => array(),
+        'numberOfAttendants' => array()
       )
     )
   );

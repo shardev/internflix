@@ -208,26 +208,66 @@ class MovieReservationController
     $query = \Drupal::database()->select('reservations', 'r')
       ->fields('r');
 
+    $genreProvided = \Drupal::request()->query->get('genre');
+    if (!empty($genreProvided)) {
+      $query->condition('reserved_movie_genre', '%' . Database::getConnection()->escapeLike($genreProvided) . '%', "LIKE");
+    }
+
+    $attendantsProvided = \Drupal::request()->query->get('numberOfAttendants');
+    if (!empty($attendantsProvided)) {
+      $moviesByNumberOfAttendants = $this->getMoviesByNumberOfAttendants($attendantsProvided);
+      $query->condition('reserved_movie_name', $moviesByNumberOfAttendants);
+    }
+
     $sortTypeProvided = \Drupal::request()->query->get('filterType');
     if (!empty($sortTypeProvided)) {
       if ($sortTypeProvided == "A-Z") {
         $query->orderBy('customer_name', 'ASC');
-      }
-      else if($sortTypeProvided == "Z-A"){
+      } else if ($sortTypeProvided == "Z-A") {
         $query->orderBy('customer_name', 'DESC');
-      }
-      else if($sortTypeProvided == "newestFirst"){
+      } else if ($sortTypeProvided == "newestFirst") {
         $query->orderBy('time_of_reservation', 'DESC');
-      }
-      else if($sortTypeProvided == "oldestFirst"){
+      } else if ($sortTypeProvided == "oldestFirst") {
         $query->orderBy('time_of_reservation', 'ASC');
       }
     }
-
     $reservations = $query->execute()->fetchAll();
+
+    $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree('genre');
+    foreach ($terms as $term) {
+      $genres[] = array(
+        'id' => $term->tid,
+        'name' => $term->name
+      );
+    }
+    $numberOfAttendants = $this->getPossibleNumberOfAttendants();
+
+    // test genres and combinations
     return array(
       '#theme' => 'all_reservations',
-      '#reservations' => $reservations
+      '#reservations' => $reservations,
+      '#genres' => $genres,
+      '#numberOfAttendants' => $numberOfAttendants
     );
+  }
+
+  private function getPossibleNumberOfAttendants()
+  {
+    $query = \Drupal::entityQuery('node')->condition('type', 'movie')->execute();
+    $nodes = \Drupal\node\Entity\Node::loadMultiple($query);
+    foreach ($nodes as $node) {
+      $numberOfAttendants[] = $node->field_attendants_number;
+    }
+    return $numberOfAttendants;
+  }
+
+  private function getMoviesByNumberOfAttendants($attendantsProvided)
+  {
+    $query = \Drupal::entityQuery('node')->condition('type', 'movie')->condition('field_attendants_number', $attendantsProvided)->execute();
+    $nodes = \Drupal\node\Entity\Node::loadMultiple($query);
+    foreach ($nodes as $node) {
+      $movies[] = $node->getTitle();
+    }
+    return $movies;
   }
 }

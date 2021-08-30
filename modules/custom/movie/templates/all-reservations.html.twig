@@ -3,12 +3,30 @@
 <form action="/all-reservations" method="get">
   <label for="filterType">Sort:</label>
   <select name="filterType" id="filterType">
+    <option value="">None</option>
     <option value="A-Z">Alphabetically ascending</option>
     <option value="Z-A">Alphabetically descending</option>
     <option value="newestFirst">From newest to oldest</option>
     <option value="oldestFirst">From oldest to newest</option>
   </select>
-  <button type="submit">Sort</button>
+
+  <label for="genre">Genres: </label>
+  <select name="genre" id="genre">
+    <option value="">None</option>
+    {% for genre in genres %}
+      <option value="{{ genre.name }}">{{ genre.name }}</option>
+    {% endfor %}
+  </select>
+
+  <label for="numberOfAttendants">Number of attendants: </label>
+  <select name="numberOfAttendants" id="numberOfAttendants">
+    <option value="">None</option>
+    {% for attendants in numberOfAttendants %}
+      <option value="{{ attendants.value }}">{{ attendants.value }}</option>
+    {% endfor %}
+  </select>
+
+  <button type="submit">Search</button>
 </form>
 
 <br>
