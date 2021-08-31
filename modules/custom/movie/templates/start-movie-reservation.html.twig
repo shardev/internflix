@@ -28,55 +28,60 @@
 
 
 <div id="dialog-opt-1" hidden="true">
-  <label for="firstName">First name:</label>
-  <input required type="text" name="firstName" id="firstName"> <br> <br>
+  <form id="form1">
+    <label for="firstName">First name:</label>
+    <input required type="text" name="firstName" id="firstName"> <br> <br>
 
-  <label for="lastName">Last name:</label>
-  <input required type="text" name="lastName" id="lastName"> <br> <br>
+    <label for="lastName">Last name:</label>
+    <input required type="text" name="lastName" id="lastName"> <br> <br>
 
-  <label for="email">Email:</label>
-  <input required type="email" name="email" id="emailInput"> <br> <br>
+    <label for="email">Email:</label>
+    <input required type="email" name="email" id="emailInput"> <br> <br>
 
-  <label>Gender:</label><br>
-  <input type="radio" id="male" name="gender" value="male">
-  <label for="male">Male</label><br>
-  <input type="radio" id="female" name="gender" value="female">
-  <label for="female">Female</label><br><br>
+    <label>Gender:</label><br>
+    <input type="radio" id="male" name="gender" value="male">
+    <label for="male">Male</label><br>
+    <input type="radio" id="female" name="gender" value="female">
+    <label for="female">Female</label><br><br>
 
-  <button id="next1">Proceed</button>
-
+    <button id="next1">Proceed</button>
+  </form>
 </div>
 
 <div id="dialog-opt-2" hidden="true">
-   <label for="country">Country:</label>
-   <select name="country" class="countries" id="countryId">
-   <option value="">Select Country</option>
-   </select> <br>
+  <form id="form2">
+    <label for="country">Country:</label>
+    <select name="country" class="countries" id="countryId" required>
+      <option value="">Select Country</option>
+    </select> <br>
 
-   <label for="state">State:</label>
-   <select name="state" class="states" id="stateId">
-   <option value="">Select State</option>
-   </select> <br>
+    <label for="state">State:</label>
+    <select name="state" class="states" id="stateId" required>
+      <option value="">Select State</option>
+    </select> <br>
 
-   <label for="city">City:</label>
-   <select name="city" class="cities" id="cityId">
-   <option value="">Select City</option>
-   </select> <br> <br>
+    <label for="city">City:</label>
+    <select name="city" class="cities" id="cityId" required>
+      <option value="">Select City</option>
+    </select> <br> <br>
 
-  <button id="next2">Proceed</button>
+    <button id="next2">Proceed</button>
+  </form>
 </div>
 
 <div id="dialog-opt-3" hidden="true">
-  <label for="email2">Email:</label>
-  <input type="email" name="email2"> <br> <br>
+  <form id="form3">
+    <label for="email2">Email:</label>
+    <input type="email" name="email2" id="email2" required> <br> <br>
 
-  <label for="email3">Enter email again:</label>
-  <input type="email" name="email3"> <br> <br>
+    <label for="email3">Enter email again:</label>
+    <input type="email" name="email3" id="email3" required> <br> <br>
 
-  <label for="tel">Phone:</label>
-  <input type="phone" name="phone"> <br> <br>
+    <label for="tel">Phone:</label>
+    <input type="phone" name="phone" required> <br> <br>
 
-  <button id="next3">Submit</button>
+    <button id="next3">Submit</button>
+  </form>
 </div>
 
 <div id="moviesByGenre">
@@ -106,5 +111,5 @@
   {% endfor %}
 </div>
 
- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
- <script src="//geodata.solutions/includes/countrystatecity.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="//geodata.solutions/includes/countrystatecity.js"></script>
