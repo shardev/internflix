@@ -3,6 +3,8 @@
 namespace Drupal\movie\Controller;
 
 use Drupal\Core\Database\Database;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class SubscriptionController
 {
@@ -55,9 +57,10 @@ class SubscriptionController
     );
   }
 
+
   /**
    * Make new subscription. Data came from ajax request.
-   * @return string[]
+   * @return JsonResponse
    */
   function saveSubscription()
   {
@@ -82,11 +85,8 @@ class SubscriptionController
       $msg = "Subscription successfully created.";
     } else {
       $msg = "Subscription is not successfully created. User already exists.";
+      return new JsonResponse(['success' => false], Response::HTTP_OK);
     }
-
-    return array(
-      '#theme' => 'save_subscription',
-      '#msg' => $msg
-    );
+    return new JsonResponse(['success' => true], Response::HTTP_OK);
   }
 }

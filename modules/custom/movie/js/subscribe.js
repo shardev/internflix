@@ -33,7 +33,16 @@ jQuery(function () {
       jQuery(this).closest('.ui-dialog-content').dialog('close');
       jQuery('#dialog-opt-3').dialog({
         title: "Enter information:",
-        width: 500
+        width: 500,
+        create: function () {
+          jQuery(this).closest('div.ui-dialog')
+            .find('button.ui-dialog-titlebar-close')
+            .click(function (e) {
+              jQuery("#next3").prop("disabled", false)
+              jQuery("#responsePlaceholder").attr("hidden", true)
+              e.preventDefault()
+            });
+        }
       })
     }
   })
@@ -56,9 +65,16 @@ jQuery(function () {
             }
           },
           success: function (response) {
-            document.open()
-            document.write(response)
-            document.close()
+            if (response["success"]) {
+              jQuery("#dialog-opt-3").closest('.ui-dialog-content').dialog('close');
+              jQuery('#dialog-success').dialog({
+                title: "Subscription successful!",
+                width: 500
+              })
+            } else {
+              jQuery("#responsePlaceholder").attr("hidden", false)
+              jQuery("#next3").prop("disabled", true)
+            }
           },
           error: function (jqXHR, textStatus, errorThrown) {
             jQuery("html").html("<p>Error occurred while making subscription. </br> <input type='submit' onclick=\"window.history.go(-1); return false;\">Go back</input> ")
