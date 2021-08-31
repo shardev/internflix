@@ -28,41 +28,40 @@
 
 
 <div id="dialog-opt-1" hidden="true">
-  <form id="form1">
-    <label for="firstName">First name:</label>
-    <input required type="text" name="firstName" id="firstName"> <br> <br>
+  <label for="firstName">First name:</label>
+  <input required type="text" name="firstName" id="firstName"> <br> <br>
 
-    <label for="lastName">Last name:</label>
-    <input required type="text" name="lastName" id="lastName"> <br> <br>
+  <label for="lastName">Last name:</label>
+  <input required type="text" name="lastName" id="lastName"> <br> <br>
 
-    <label for="email">Email:</label>
-    <input required type="email" name="email" id="emailInput"> <br> <br>
+  <label for="email">Email:</label>
+  <input required type="email" name="email" id="emailInput"> <br> <br>
 
-    <label>Gender:</label><br>
-    <input type="radio" id="male" name="gender" value="male">
-    <label for="male">Male</label><br>
-    <input type="radio" id="female" name="gender" value="female">
-    <label for="female">Female</label><br><br>
+  <label>Gender:</label><br>
+  <input type="radio" id="male" name="gender" value="male">
+  <label for="male">Male</label><br>
+  <input type="radio" id="female" name="gender" value="female">
+  <label for="female">Female</label><br><br>
 
-    <button id="next1">Proceed</button>
-  </form>
+  <button id="next1">Proceed</button>
+
 </div>
 
 <div id="dialog-opt-2" hidden="true">
-{#  <label for="country">Country:</label>#}
-{#  <select name="country" class="countries" id="countryId">#}
-{#    <option value="">Select Country</option>#}
-{#  </select> <br>#}
+   <label for="country">Country:</label>
+   <select name="country" class="countries" id="countryId">
+   <option value="">Select Country</option>
+   </select> <br>
 
-{#  <label for="state">State:</label>#}
-{#  <select name="state" class="states" id="stateId">#}
-{#    <option value="">Select State</option>#}
-{#  </select> <br>#}
+   <label for="state">State:</label>
+   <select name="state" class="states" id="stateId">
+   <option value="">Select State</option>
+   </select> <br>
 
-{#  <label for="city">City:</label>#}
-{#  <select name="city" class="cities" id="cityId">#}
-{#    <option value="">Select City</option>#}
-{#  </select> <br> <br>#}
+   <label for="city">City:</label>
+   <select name="city" class="cities" id="cityId">
+   <option value="">Select City</option>
+   </select> <br> <br>
 
   <button id="next2">Proceed</button>
 </div>
@@ -107,5 +106,5 @@
   {% endfor %}
 </div>
 
-{#<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>#}
-{#<script src="//geodata.solutions/includes/countrystatecity.js"></script>#}
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+ <script src="//geodata.solutions/includes/countrystatecity.js"></script>

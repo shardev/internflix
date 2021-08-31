@@ -8,4 +8,3 @@ movie_custom_library:
     js/subscribe.js: {}
   dependencies:
     - core/jquery
-    - drupal/country_state_city
